@@ -13,10 +13,10 @@ namespace WebMVC.Controllers
         private readonly IGetAtletaPorId _getAtletaPorId;
         private readonly IModificarAtleta _modificarAtleta;
 
-        public UsuarioDigitController(IGetAtletas getAtletas,
-                                ICrearAtleta crearAtleta,
-                                IGetAtletaPorId getAtletaPorId,
-                                IModificarAtleta modificarAtleta    )
+        public UsuarioDigitController(  IGetAtletas getAtletas,
+                                        ICrearAtleta crearAtleta,
+                                        IGetAtletaPorId getAtletaPorId,
+                                        IModificarAtleta modificarAtleta)
 
         {
             _getAtletas = getAtletas;
