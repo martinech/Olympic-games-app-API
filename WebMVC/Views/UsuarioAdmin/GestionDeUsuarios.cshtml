@@ -1,0 +1,52 @@
+﻿@model UsuarioIndexViewModel
+
+@{
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+<p>Bienvenido @Context.Session.GetString("rolLogueado")</p>
+
+<h2>@ViewData["Title"]</h2>
+@if (TempData["MensajeError"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["MensajeError"]
+    </div>
+}
+<a asp-action="CrearUsuario" class="btn btn-success" style="float: right">Crear Usuario</a>
+
+<table class="table table-stripped mt-3">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Rol</th>
+            <th>Email administrador</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var usuario in Model.Usuarios)
+        {
+            if(Context.Session.GetInt32("idLogueado") != usuario.Id)
+            {
+                <tr>
+                    <td>@usuario.Email</td>
+                    <td>@usuario.Password</td>
+                    <td>@usuario.Rol</td>
+                    <td>@usuario.EmailAdministrador</td>
+                    <td>
+                        <a asp-action="ModificarUsuario" asp-route-id="@usuario.Id" class="btn btn-success">Editar</a>
+                    </td>
+                    <td>
+                        <a asp-action="Eliminar" asp-route-id="@usuario.Id" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<form asp-controller="Home" asp-action="Logout" method="post">
+    <input type="submit" value="Cerrar Sesion" class="btn btn-danger"/>
+</form>

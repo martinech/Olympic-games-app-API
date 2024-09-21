@@ -1,0 +1,29 @@
+﻿using LogicaDeNegocio.Exceptions;
+
+namespace LogicaDeNegocio.Entidades
+{
+    public class Atleta
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Sexo { get; set; }
+        public string Pais  { get; set; }
+
+        public void Validar()
+        {
+            if (string.IsNullOrEmpty(Nombre))
+                throw new DatoInvalidoException("El nombre no puede ser vacio");
+            if (string.IsNullOrEmpty(Sexo))
+                throw new DatoInvalidoException("La sexo no puede ser vacia");
+            if (string.IsNullOrEmpty(Pais))
+                throw new DatoInvalidoException("El pais no puede estar vacio");
+        }
+
+        public void Copiar(Atleta atleta)
+        {
+            Nombre = atleta.Nombre;
+            Sexo = atleta.Sexo;
+            Pais = atleta.Pais;
+        }
+    }
+}

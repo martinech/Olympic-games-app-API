@@ -1,0 +1,31 @@
+﻿@model Dto.UsuarioDto
+
+@{
+    ViewData["Titulo"] = "Modificar Usuario";
+}
+
+<h1>Modificar Usuario</h1>
+
+<form asp-action="ModificarUsuario" method="post" id="formularioModificar">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.EmailAdministrador)
+    @Html.HiddenFor(model => model.FechaAlta) 
+
+    <label>Modificar Email</label>
+    <input type="email" asp-for="Email" placeholder="Email del usuario" id="emailModificar"/><br /><br />
+    <label>Modificar Password</label>
+    <input type="text" asp-for="Password" placeholder="Password del usuario" id="passwordModificar"/><br /><br />
+    <label>Modificar el Rol</label>
+    <select asp-for="Rol">
+        <option value="admin">Administrador</option>
+        <option value="digit">Digitador</option>
+    </select>
+    <br /><br />
+    <a asp-action="GestionDeUsuarios" class="btn btn-secondary">Volver</a>
+    <input type="submit" value="Guardar" class="btn btn-success" id="botonModificar"/>
+    <p id="parrafoModificar"></p>
+    <p>@ViewBag.mensaje</p>
+</form>
+
+<script type="text/javascript" src="~/js/modificar.js"></script>

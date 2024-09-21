@@ -1,0 +1,26 @@
+﻿@model Dto.UsuarioDto
+
+@{
+    ViewData["Title"] = "Crear Usuario";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="CrearUsuario" method="post" id="formulario">
+    <label>Ingresar Email</label>
+    <input type="email" asp-for="Email" placeholder="Email del usuario" id="email"/><br /><br />
+    <label>Ingresar Password</label>
+    <input type="text" asp-for="Password" placeholder="Password del usuario" id="password"/><br /><br />
+    <label>Seleccione el Rol</label>
+    <select asp-for="Rol">
+        <option value="admin">Administrador</option>
+        <option value="digit">Digitador</option>
+    </select>
+    <br /><br />
+    <a asp-action="GestionDeUsuarios" class="btn btn-secondary">volver</a>
+    <input type="submit" value="Guardar" class="btn btn-success" id="botonCrear"/>
+</form>
+<p id="parrafo"></p>
+<p>@ViewBag.mensaje</p>
+
+<script type="text/javascript" src="~/js/crear.js"></script>

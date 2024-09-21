@@ -1,0 +1,41 @@
+﻿@model GestionAtletasViewModel
+
+@{
+    ViewData["Title"] = "Gestión de Atletas";
+}
+
+<p>Bienvenido @Context.Session.GetString("rolLogueado")</p>
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-stripped mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Sexo</th>
+            <th>Pais</th>
+            <th>Disciplinas</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var atleta in Model.Atletas)
+        {
+            <tr>
+                <td>@atleta.Nombre</td>
+                <td>@atleta.Sexo</td>
+                <td>@atleta.Pais</td>
+                <!--<td>agregar disciplina</td>-->
+                <td></td>
+                <td>
+                    <a asp-action="ModificarAtleta" asp-route-id="@atleta.Id" class="btn btn-success">Agregar disciplina</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-controller="Home" asp-action="Logout" method="post">
+    <input type="submit" value="Cerrar Sesion" class="btn btn-danger" />
+</form>
+

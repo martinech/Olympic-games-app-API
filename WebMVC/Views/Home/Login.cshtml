@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<center>
+    <h1>Bienvenido</h1>
+    <form asp-action="Login" method="post" id="formularioLogin">
+        <input type="email" placeholder="Email" name="email" id="emailLogin"/><br /><br />
+        <input type="password" placeholder="Password" name="password" id="passwordLogin"/><br /><br />
+        <input class="btn btn-primary" type="submit" value="Iniciar Sesion" id="botonLogin" />
+    </form>
+    <p >@ViewBag.mensaje</p>
+    <p id="parrafoLogin"></p>
+</center>
+
+<script type="text/javascript" src="~/js/login.js"></script>
+

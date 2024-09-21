@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\js\crear.js" />
+    <Content Remove="wwwroot\js\modificar.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\crear.js" />
+    <None Include="wwwroot\js\modificar.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccesoADatos\AccesoADatos.csproj" />
+    <ProjectReference Include="..\Dto\Dto.csproj" />
+    <ProjectReference Include="..\LogicaDeAplicacion\LogicaDeAplicacion.csproj" />
+    <ProjectReference Include="..\LogicaDeNegocio\LogicaDeNegocio.csproj" />
+  </ItemGroup>
+
+</Project>

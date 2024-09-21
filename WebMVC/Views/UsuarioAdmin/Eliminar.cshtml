@@ -1,0 +1,16 @@
+﻿@model Dto.UsuarioDto
+
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<h1>Esta a punto de eliminar un usuario de la base de datos</h1>
+
+<form asp-action="Eliminar" method="post">
+
+    <p>@Model.Email</p>
+
+    <p>@Model.Rol</p>
+    <a asp-action="GestionDeUsuarios" class="btn btn-secondary">Volver</a>
+    <input type="submit" value="Eliminar" class="btn btn-danger"/>
+</form>
