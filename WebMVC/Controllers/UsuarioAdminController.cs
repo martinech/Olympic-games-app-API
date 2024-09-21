@@ -33,8 +33,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult GestionDeUsuarios()
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-                HttpContext.Session.GetString("rolLogueado") == ("admin"))
+            if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
                 UsuarioIndexViewModel model = new UsuarioIndexViewModel();
                 model.Usuarios = _getUsuarios.Ejecutar();
