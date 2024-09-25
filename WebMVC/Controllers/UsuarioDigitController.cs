@@ -28,8 +28,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult GestionDeAtletas()
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-                HttpContext.Session.GetString("rolLogueado") == ("digit"))
+            if (HttpContext.Session.GetString("rolLogueado") == "digit")
             {
                 GestionAtletasViewModel gestAtlViewModel = new GestionAtletasViewModel();
                 gestAtlViewModel.Atletas = _getAtletas.Ejecutar();

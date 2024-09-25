@@ -67,6 +67,11 @@ namespace WebMVC.Controllers
                 {
                     _crearUsuario.Ejecutar(nuevoUsuario);
                 }
+                catch (UsuarioInvalidoException e)
+                {
+                    ViewBag.mensaje = e.Message;
+                    return View();
+                }
                 catch (DatoInvalidoException e)
                 {
                     ViewBag.mensage = e.Message;
@@ -131,8 +136,7 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult Eliminar(int id, UsuarioDto usuarioDto)
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-               HttpContext.Session.GetString("rolLogueado") == ("admin"))
+            if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
                 _eliminarUsuario.Ejecutar(id);
                 return RedirectToAction("GestionDeUsuarios");

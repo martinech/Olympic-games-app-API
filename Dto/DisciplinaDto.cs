@@ -1,6 +1,8 @@
-﻿namespace LogicaDeNegocio.Entidades
+﻿using LogicaDeNegocio.Entidades;
+
+namespace Dto
 {
-    public class Disciplina
+    public class DisciplinaDto
     {
         public int Id { get; set; }
         public Nombre Nombre { get; set; }

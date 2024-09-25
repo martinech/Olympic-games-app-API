@@ -15,8 +15,13 @@ namespace AccesoADatos
         }
         public void Crear(Usuario usuario)
         {
-            _contexto.Set<Usuario>().Add(usuario);
-            _contexto.SaveChanges();
+            if (_contexto.Set<Usuario>().Any(u => u.Email == usuario.Email))
+                throw new UsuarioInvalidoException($"Ya existe un usuario con el email: {usuario.Email}");
+            else
+            {
+                _contexto.Set<Usuario>().Add(usuario);
+                _contexto.SaveChanges();
+            }
         }
 
         public void Eliminar(int id)
