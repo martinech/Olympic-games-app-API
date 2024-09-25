@@ -25,11 +25,7 @@
                 <td>@atleta.Nombre</td>
                 <td>@atleta.Sexo</td>
                 <td>@atleta.Pais</td>
-                <!--<td>agregar disciplina</td>-->
-                <td></td>
-                <td>
-                    <a asp-action="ModificarAtleta" asp-route-id="@atleta.Id" class="btn btn-success">Agregar disciplina</a>
-                </td>
+                <td><a asp-action="GetDisciplinas" asp-route-id="@atleta.Id" class="btn btn-success">Ver disciplinas</a></td>
             </tr>
         }
     </tbody>

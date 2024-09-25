@@ -47,8 +47,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult CrearUsuario()
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-                HttpContext.Session.GetString("rolLogueado") == ("admin"))
+            if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
                 return View();
             }
@@ -60,8 +59,7 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult CrearUsuario(string email, string password, string rol)
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-                HttpContext.Session.GetString("rolLogueado") == ("admin"))
+            if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
                 UsuarioDto nuevoUsuario = new UsuarioDto()
                 {
@@ -91,8 +89,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult ModificarUsuario(int id)
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-                HttpContext.Session.GetString("rolLogueado") == ("admin"))
+            if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
                 UsuarioDto usuarioDto = _getUsuarioPorId.Ejecutar(id);
                 return View(usuarioDto);
@@ -106,8 +103,7 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult ModificarUsuario(int id, UsuarioDto usuarioDto)
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-                HttpContext.Session.GetString("rolLogueado") == ("admin"))
+            if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
                 try
                 {
@@ -130,8 +126,7 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult Eliminar(int id)
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-               HttpContext.Session.GetString("rolLogueado") == ("admin"))
+            if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
                 try
                 {

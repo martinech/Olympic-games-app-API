@@ -40,45 +40,10 @@ namespace WebMVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
         [HttpGet]
-        public IActionResult ModificarAtleta(int id)
+        public IActionResult GetDisciplinas(int id)
         {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-                HttpContext.Session.GetString("rolLogueado") == ("digit"))
-            {
-                AtletaDto atletaDto = _getAtletaPorId.Ejecutar(id);
-                return View(atletaDto);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        [HttpPost]
-        public IActionResult ModificarAtleta(int id, AtletaDto atletaDto)
-        {
-            if (HttpContext.Session.GetString("rolLogueado") != null &&
-                HttpContext.Session.GetString("rolLogueado") == ("digit"))
-            {
-                try
-                {
-
-                    _modificarAtleta.Ejecutar(id, atletaDto);
-
-                }
-                catch (DatoInvalidoException e)
-                {
-                    ViewBag.mensaje = e.Message;
-                    return View();
-                }
-                return RedirectToAction("GestionDeAtletas");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            return View();
         }
     }
 }
