@@ -4,6 +4,7 @@ using AccesoADatos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoADatos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20240925074100_AtletaDisciplina")]
+    partial class AtletaDisciplina
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,21 +25,6 @@ namespace AccesoADatos.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AtletaDisciplina", b =>
-                {
-                    b.Property<int>("AtletasId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DisciplinasId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AtletasId", "DisciplinasId");
-
-                    b.HasIndex("DisciplinasId");
-
-                    b.ToTable("AtletaDisciplina");
-                });
-
             modelBuilder.Entity("LogicaDeNegocio.Entidades.Atleta", b =>
                 {
                     b.Property<int>("Id")
@@ -44,6 +32,9 @@ namespace AccesoADatos.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("DisciplinaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -59,6 +50,8 @@ namespace AccesoADatos.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DisciplinaId");
+
                     b.ToTable("Atletas");
                 });
 
@@ -69,9 +62,6 @@ namespace AccesoADatos.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AnioDeIntegracion")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -138,19 +128,11 @@ namespace AccesoADatos.Migrations
                     b.ToTable("Usuario");
                 });
 
-            modelBuilder.Entity("AtletaDisciplina", b =>
+            modelBuilder.Entity("LogicaDeNegocio.Entidades.Atleta", b =>
                 {
-                    b.HasOne("LogicaDeNegocio.Entidades.Atleta", null)
-                        .WithMany()
-                        .HasForeignKey("AtletasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("LogicaDeNegocio.Entidades.Disciplina", null)
-                        .WithMany()
-                        .HasForeignKey("DisciplinasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Atletas")
+                        .HasForeignKey("DisciplinaId");
                 });
 
             modelBuilder.Entity("LogicaDeNegocio.Entidades.Disciplina", b =>
@@ -174,6 +156,11 @@ namespace AccesoADatos.Migrations
 
                     b.Navigation("Nombre")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("LogicaDeNegocio.Entidades.Disciplina", b =>
+                {
+                    b.Navigation("Atletas");
                 });
 #pragma warning restore 612, 618
         }

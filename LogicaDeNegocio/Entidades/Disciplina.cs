@@ -10,6 +10,7 @@ namespace LogicaDeNegocio.Entidades
     {
         public int Id { get; set; }
         public Nombre Nombre { get; set; }
-        public List<Atleta> Atletas { get; set; }
+        public int AnioDeIntegracion { get; set; }
+        public List<Atleta> Atletas { get; set; } = new List<Atleta>();
     }
 }

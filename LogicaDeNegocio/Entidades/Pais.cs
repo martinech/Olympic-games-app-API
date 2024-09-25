@@ -8,8 +8,8 @@ namespace LogicaDeNegocio.Entidades
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Delegado { get; set; }
-        public int CantHabitantes { get; set; }
         public string TelDelegado { get; set; }
+        public int CantHabitantes { get; set; }
 
         public Pais() { }
 

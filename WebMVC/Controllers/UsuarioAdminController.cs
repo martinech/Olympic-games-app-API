@@ -40,21 +40,15 @@ namespace WebMVC.Controllers
                 return View(model);
             }
             else
-            {
                 return RedirectToAction("Index", "Home");
-            }
         }
         [HttpGet]
         public IActionResult CrearUsuario()
         {
             if (HttpContext.Session.GetString("rolLogueado") == "admin")
-            {
                 return View();
-            }
             else
-            {
                 return RedirectToAction("Index", "Home");
-            }
         }
         [HttpPost]
         public IActionResult CrearUsuario(string email, string password, string rol)
@@ -81,10 +75,7 @@ namespace WebMVC.Controllers
                 return RedirectToAction("GestionDeUsuarios");
             }
             else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            
+                return RedirectToAction("Index", "Home");         
         }
         [HttpGet]
         public IActionResult ModificarUsuario(int id)
@@ -95,9 +86,7 @@ namespace WebMVC.Controllers
                 return View(usuarioDto);
             }
             else
-            {
-                return RedirectToAction("Index", "Home");
-            }  
+                return RedirectToAction("Index", "Home");  
         }
 
         [HttpPost]
@@ -118,10 +107,7 @@ namespace WebMVC.Controllers
                 return RedirectToAction("GestionDeUsuarios");
             }
             else
-            {
                 return RedirectToAction("Index", "Home");
-            }
-            
         }
         [HttpGet]
         public IActionResult Eliminar(int id)
@@ -140,10 +126,7 @@ namespace WebMVC.Controllers
                 }
             }
             else
-            {
                 return RedirectToAction("Index", "Home");
-            }
-            
         }
         [HttpPost]
         public IActionResult Eliminar(int id, UsuarioDto usuarioDto)
@@ -155,9 +138,7 @@ namespace WebMVC.Controllers
                 return RedirectToAction("GestionDeUsuarios");
             }
             else
-            {
                 return RedirectToAction("Index", "Home");
-            }
         }
     }
 }

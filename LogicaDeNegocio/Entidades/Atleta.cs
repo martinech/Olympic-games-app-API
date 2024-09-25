@@ -7,7 +7,8 @@ namespace LogicaDeNegocio.Entidades
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Sexo { get; set; }
-        public string Pais  { get; set; }
+        public string Pais { get; set; }
+        public List<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
 
         public void Validar()
         {
@@ -24,6 +25,11 @@ namespace LogicaDeNegocio.Entidades
             Nombre = atleta.Nombre;
             Sexo = atleta.Sexo;
             Pais = atleta.Pais;
+        }
+
+        public List<Disciplina> GetDesciplinasDelAtleta()
+        {
+            return Disciplinas;
         }
     }
 }

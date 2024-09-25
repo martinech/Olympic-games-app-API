@@ -19,6 +19,7 @@ namespace AccesoADatos
             modelBuilder.Entity<Usuario>(usuario => usuario.HasKey(u => u.Id));
             modelBuilder.Entity<Pais>(pais => pais.HasKey(p => p.Id));
             modelBuilder.Entity<Atleta>(atleta => atleta.HasKey(a => a.Id));
+            modelBuilder.Entity<Disciplina>().OwnsOne(disciplina => disciplina.Nombre);
             base.OnModelCreating(modelBuilder);
         }
     }

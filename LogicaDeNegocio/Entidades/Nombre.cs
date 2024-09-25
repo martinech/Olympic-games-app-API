@@ -9,5 +9,10 @@ namespace LogicaDeNegocio.Entidades
     public class Nombre
     {
         public string Disciplina { get; protected set; }
+
+        public Nombre(string disciplina)
+        {
+            Disciplina = disciplina;
+        }
     }
 }
