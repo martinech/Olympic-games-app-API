@@ -8,6 +8,7 @@ namespace AccesoADatos
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Atleta> Atletas { get; set; }
+        public DbSet<Disciplina> Disciplinas { get; set; }
 
         public Contexto(DbContextOptions options) : base(options)
         {

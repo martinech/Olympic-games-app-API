@@ -75,7 +75,7 @@ namespace AccesoADatos.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Disciplina");
+                    b.ToTable("Disciplinas");
                 });
 
             modelBuilder.Entity("LogicaDeNegocio.Entidades.Pais", b =>
@@ -166,7 +166,7 @@ namespace AccesoADatos.Migrations
 
                             b1.HasKey("DisciplinaId");
 
-                            b1.ToTable("Disciplina");
+                            b1.ToTable("Disciplinas");
 
                             b1.WithOwner()
                                 .HasForeignKey("DisciplinaId");

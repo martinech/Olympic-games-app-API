@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoADatos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240925074313_actualizar")]
-    partial class actualizar
+    [Migration("20240926000127_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,9 +73,12 @@ namespace AccesoADatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AnioDeIntegracion")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Disciplina");
+                    b.ToTable("Disciplinas");
                 });
 
             modelBuilder.Entity("LogicaDeNegocio.Entidades.Pais", b =>
@@ -166,7 +169,7 @@ namespace AccesoADatos.Migrations
 
                             b1.HasKey("DisciplinaId");
 
-                            b1.ToTable("Disciplina");
+                            b1.ToTable("Disciplinas");
 
                             b1.WithOwner()
                                 .HasForeignKey("DisciplinaId");

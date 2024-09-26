@@ -3,6 +3,7 @@ using WebMVC.Models;
 using Dto;
 using LogicaDeNegocio.Exceptions;
 using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
+using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
 
 namespace WebMVC.Controllers
 {
@@ -12,17 +13,20 @@ namespace WebMVC.Controllers
         private readonly ICrearAtleta _crearAtleta;
         private readonly IGetAtletaPorId _getAtletaPorId;
         private readonly IModificarAtleta _modificarAtleta;
+        private readonly IGetDisciplinas _getDisciplinas;
 
         public UsuarioDigitController(  IGetAtletas getAtletas,
                                         ICrearAtleta crearAtleta,
                                         IGetAtletaPorId getAtletaPorId,
-                                        IModificarAtleta modificarAtleta)
+                                        IModificarAtleta modificarAtleta,
+                                        IGetDisciplinas getDisciplinas)
 
         {
             _getAtletas = getAtletas;
             _crearAtleta = crearAtleta;
             _getAtletaPorId = getAtletaPorId;
             _modificarAtleta = modificarAtleta;
+            _getDisciplinas = getDisciplinas;
         }
 
         [HttpGet]
@@ -42,7 +46,9 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult GetDisciplinas(int id)
         {
-            return View();
+            GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
+            disciplinasVM.Disciplinas = _getDisciplinas.Ejecutar();
+            return View(disciplinasVM);
         }
     }
 }

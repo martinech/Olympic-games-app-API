@@ -2,3 +2,13 @@
 
 
 <h1>Disciplinas</h1>
+
+
+<select>
+    @foreach (var disciplina in Model.Disciplinas)
+    {
+        <option value="@disciplina.Nombre">@disciplina.Nombre.Disciplina</option>
+    }
+</select>
+<br /><br />
+<a asp-action="GestionDeAtletas" class="btn btn-secondary">Volver</a>

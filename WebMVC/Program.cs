@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using AccesoADatos;
 using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeAplicacion.ImplementacionCU.UsuarioCU;
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
+using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
 using LogicaDeAplicacion.ImplementacionCU;
+using LogicaDeAplicacion.ImplementacionCU.UsuarioCU;
 using LogicaDeAplicacion.ImplementacionCU.AtletaCU;
+using LogicaDeAplicacion.ImplementacionCU.DisciplinaCU;
 
 namespace WebMVC
 {
@@ -22,6 +24,7 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(IRepositorioUsuario), typeof(RepositorioUsuario));
             builder.Services.AddScoped(typeof(IRepositorioPais), typeof(RepositorioPais));
             builder.Services.AddScoped(typeof(IRepositorioAtleta), typeof(RepositorioAtleta));
+            builder.Services.AddScoped(typeof(IRepositorioDisciplina), typeof(RepositorioDisciplina));
 
             //Inyeccion de un caso de uso cada vez que se llama a la interface correspondiente.
             builder.Services.AddScoped(typeof(ICrearUsuario), typeof(CrearUsuario));
@@ -37,6 +40,9 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(IGetAtletaPorId), typeof(GetAtletaPorId));
             builder.Services.AddScoped(typeof(IGetAtletas), typeof(GetAtletas));
             builder.Services.AddScoped(typeof(IModificarAtleta), typeof(ModificarAtleta));
+
+            //Inyeccion de dependencia para los CU disciplina
+            builder.Services.AddScoped(typeof(IGetDisciplinas), typeof(GetDisciplinas));
 
 
             // Add services to the container.
