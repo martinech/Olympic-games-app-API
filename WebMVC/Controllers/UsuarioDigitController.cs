@@ -48,6 +48,7 @@ namespace WebMVC.Controllers
         {
             GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
             disciplinasVM.Disciplinas = _getDisciplinas.Ejecutar();
+            disciplinasVM.Atleta = _getAtletaPorId.Ejecutar(id);
             return View(disciplinasVM);
         }
     }

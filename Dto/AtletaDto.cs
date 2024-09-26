@@ -8,6 +8,7 @@ namespace Dto
         public string Nombre { get; set; }
         public string Sexo { get; set; }
         public string Pais { get; set; }
+        public List<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
 
         public AtletaDto() { }
 
@@ -17,6 +18,7 @@ namespace Dto
             Nombre = atleta.Nombre;
             Sexo = atleta.Sexo;
             Pais = atleta.Pais;
+            Disciplinas = atleta.Disciplinas;
         }
 
         public Atleta ToAtleta()
@@ -27,6 +29,7 @@ namespace Dto
                 Nombre = Nombre,
                 Sexo = Sexo,
                 Pais = Pais,
+                Disciplinas = Disciplinas
             };
             return atleta;
         }

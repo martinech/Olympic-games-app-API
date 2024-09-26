@@ -41,7 +41,7 @@ namespace AccesoADatos
 
         public IEnumerable<Atleta> GetAtletas()
         {
-            return _contexto.Set<Atleta>().ToList();
+            return _contexto.Set<Atleta>().Include(a => a.Disciplinas).ToList();
         }
 
         public void Modificar(int id, Atleta atleta)
