@@ -6,6 +6,7 @@ namespace Dto
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
+        public string Apellido { get; set; }
         public string Sexo { get; set; }
         public string Pais { get; set; }
         public List<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
@@ -16,6 +17,7 @@ namespace Dto
         {
             Id = atleta.Id;
             Nombre = atleta.Nombre;
+            Apellido = atleta.Apellido;
             Sexo = atleta.Sexo;
             Pais = atleta.Pais;
             Disciplinas = atleta.Disciplinas;
@@ -27,6 +29,7 @@ namespace Dto
             {
                 Id = Id,
                 Nombre = Nombre,
+                Apellido = Apellido,
                 Sexo = Sexo,
                 Pais = Pais,
                 Disciplinas = Disciplinas
