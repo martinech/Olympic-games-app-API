@@ -12,6 +12,7 @@
     <thead>
         <tr>
             <th>Nombre</th>
+            <th>Apellido</th>
             <th>Sexo</th>
             <th>Pais</th>
             <th>Disciplinas</th>
@@ -23,6 +24,7 @@
         {
             <tr>
                 <td>@atleta.Nombre</td>
+                <td>@atleta.Apellido</td>
                 <td>@atleta.Sexo</td>
                 <td>@atleta.Pais</td>
                 <td><a asp-action="GetDisciplinas" asp-route-id="@atleta.Id" class="btn btn-success">Ver disciplinas</a></td>

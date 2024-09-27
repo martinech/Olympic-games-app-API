@@ -15,14 +15,23 @@
     <tbody>
         <tr>
             <td>@Model.Atleta.Nombre</td>
-            <td>
-                @foreach (var disciplina in Model.Atleta.Disciplinas)
-                    {
-                                <span>@disciplina.Nombre.Disciplina</span>
-
-                        <br />
-                    }
-            </td>
+            @{
+                if (Model.Atleta.Disciplinas == null || !Model.Atleta.Disciplinas.Any())
+                {
+                    <td>Aun no hay disciplinas asignadas</td>
+                }
+                else
+                {
+                    <td>
+                        @foreach (var disciplina in Model.Atleta.Disciplinas)
+                        {
+                            <span>@disciplina.Nombre</span>
+                            <br />
+                        }
+                    </td>
+                }
+            }
+            
             <td>
             <select>
                 @foreach (var disciplina in Model.Disciplinas)
