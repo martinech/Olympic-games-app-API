@@ -43,6 +43,7 @@ namespace WebMVC
 
             //Inyeccion de dependencia para los CU disciplina
             builder.Services.AddScoped(typeof(IGetDisciplinas), typeof(GetDisciplinas));
+            builder.Services.AddScoped(typeof(IGetDisciplinaPorId), typeof(GetDisciplinaPorId));
 
 
             // Add services to the container.

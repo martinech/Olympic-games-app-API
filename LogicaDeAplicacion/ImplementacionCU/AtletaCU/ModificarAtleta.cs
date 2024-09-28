@@ -15,14 +15,14 @@ namespace LogicaDeAplicacion.ImplementacionCU
             _repositorioAtleta = repositorio;
         }
 
-        public void Ejecutar(int id, AtletaDto usuarioDto)
+        public void Ejecutar(int id, AtletaDto atletaDto)
         {
-            Atleta usuario = usuarioDto.ToAtleta();
+            Atleta atleta = atletaDto.ToAtleta();
 
             try
             {
-                usuario.Validar();
-                _repositorioAtleta.Modificar(id, usuario);
+                atleta.Validar();
+                _repositorioAtleta.Modificar(id, atleta);
             }
             catch (DatoInvalidoException e)
             {

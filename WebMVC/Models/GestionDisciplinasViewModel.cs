@@ -4,7 +4,7 @@ namespace WebMVC.Models
 {
     public class GestionDisciplinasViewModel
     {
-        public AtletaDto Atleta { get; set; }
-        public IEnumerable<DisciplinaDto> Disciplinas { get; set; }
+        public AtletaDto AtletaDto { get; set; }
+        public IEnumerable<DisciplinaDto> DisciplinasDto { get; set; }
     }
 }

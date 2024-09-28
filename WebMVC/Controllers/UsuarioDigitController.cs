@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebMVC.Models;
 using Dto;
-using LogicaDeNegocio.Exceptions;
 using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
 using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
 
@@ -44,22 +43,23 @@ namespace WebMVC.Controllers
             else
                 return RedirectToAction("Index", "Home");
         }
+
         [HttpGet]
         public IActionResult GetDisciplinas(int id)
         {
             GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
-            disciplinasVM.Disciplinas = _getDisciplinas.Ejecutar();
-            disciplinasVM.Atleta = _getAtletaPorId.Ejecutar(id);
+            disciplinasVM.DisciplinasDto = _getDisciplinas.Ejecutar();
+            disciplinasVM.AtletaDto = _getAtletaPorId.Ejecutar(id);
             return View(disciplinasVM);
         }
 
         [HttpPost]
         public IActionResult AgregarDisciplinaAlAtleta(int idDisciplina, int idAtleta)
         {
-            //DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(idDisciplina);
-            //AtletaDto atletaDto = _getAtletaPorId.Ejecutar(idAtleta);
-            //atletaDto.Disciplinas.Add();
-
+            DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(idDisciplina);
+            AtletaDto atletaDto = _getAtletaPorId.Ejecutar(idAtleta);
+            atletaDto.DisciplinasDto.Add(disciplinaDto);
+            _modificarAtleta.Ejecutar(idAtleta, atletaDto);
             return RedirectToAction("GetDisciplinas");
         }
     }

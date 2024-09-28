@@ -36,7 +36,7 @@ namespace AccesoADatos
 
         public Atleta GetAtletaPorId(int id)
         {
-            return _contexto.Set<Atleta>().Include(a=> a.Disciplinas).FirstOrDefault(u => u.Id == id);
+            return _contexto.Set<Atleta>().Include(a => a.Disciplinas).FirstOrDefault(u => u.Id == id);
         }
 
         public IEnumerable<Atleta> GetAtletas()

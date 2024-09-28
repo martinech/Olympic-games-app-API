@@ -7,7 +7,7 @@ namespace Dto
         public int Id { get; set; }
         public Nombre Nombre { get; set; }
         public int AnioDeIntegracion { get; set; }
-        public List<Atleta> Atletas { get; set; } = new List<Atleta>();
+        public List<AtletaDto> AtletasDto { get; set; } = new List<AtletaDto>();
 
         public DisciplinaDto() { }
 
@@ -16,7 +16,35 @@ namespace Dto
             Id = disciplina.Id;
             Nombre = disciplina.Nombre;
             AnioDeIntegracion = disciplina.AnioDeIntegracion;
-            Atletas = disciplina.Atletas;
+            AtletasDto = AtletasToAtletasDto(disciplina.Atletas);
+        }
+
+        public List<AtletaDto> AtletasToAtletasDto(List<Atleta> atletas)
+        {
+            List<AtletaDto> atletasDto = new List<AtletaDto>();
+
+            foreach (Atleta atleta in atletas)
+                atletasDto.Add(new AtletaDto(atleta));
+
+            return atletasDto;
+        }
+
+        public List<Atleta> AtletasDtoToAtletas()
+        {
+            List<Atleta> atletas = new List<Atleta>();
+
+            foreach (AtletaDto atletaDto in AtletasDto)
+                atletas.Add(new Atleta()
+                {
+                    Id = atletaDto.Id,
+                    Nombre = atletaDto.Nombre,
+                    Apellido = atletaDto.Apellido,
+                    Sexo = atletaDto.Sexo,
+                    Pais = atletaDto.Pais,
+                    Disciplinas = atletaDto.DisciplinasDtoADisciplinas()
+                });
+
+            return atletas;
         }
 
         public Disciplina ToDisciplina()
@@ -26,7 +54,7 @@ namespace Dto
                 Id = Id,
                 Nombre = Nombre,
                 AnioDeIntegracion = AnioDeIntegracion,
-                Atletas = Atletas
+                Atletas = AtletasDtoToAtletas()
             };
             return disciplina;
         }

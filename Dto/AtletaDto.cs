@@ -9,7 +9,7 @@ namespace Dto
         public string Apellido { get; set; }
         public string Sexo { get; set; }
         public string Pais { get; set; }
-        public List<DisciplinaDto> Disciplinas { get; set; } = new List<DisciplinaDto>();
+        public List<DisciplinaDto> DisciplinasDto { get; set; } = new List<DisciplinaDto>();
 
         public AtletaDto() { }
 
@@ -20,7 +20,7 @@ namespace Dto
             Apellido = atleta.Apellido;
             Sexo = atleta.Sexo;
             Pais = atleta.Pais;
-            Disciplinas = DisciplinasADisciplinasDto(atleta.Disciplinas);
+            DisciplinasDto = DisciplinasADisciplinasDto(atleta.Disciplinas);
         }
 
         public List<DisciplinaDto> DisciplinasADisciplinasDto(List<Disciplina> disciplinas)
@@ -33,6 +33,22 @@ namespace Dto
             return disciplinasDto;
         }
 
+        public List<Disciplina> DisciplinasDtoADisciplinas()
+        {
+            List<Disciplina> disciplinas = new List<Disciplina>();
+
+            foreach (DisciplinaDto disciplinaDto in DisciplinasDto)
+                disciplinas.Add(new Disciplina()
+                {
+                    Id = disciplinaDto.Id,
+                    Nombre = disciplinaDto.Nombre,
+                    AnioDeIntegracion = disciplinaDto.AnioDeIntegracion,
+                    Atletas = disciplinaDto.AtletasDtoToAtletas()
+                });
+
+            return disciplinas;
+        }
+
         public Atleta ToAtleta()
         {
             Atleta atleta = new Atleta()
@@ -42,7 +58,7 @@ namespace Dto
                 Apellido = Apellido,
                 Sexo = Sexo,
                 Pais = Pais,
-                //Disciplinas = Disciplinas
+                Disciplinas = DisciplinasDtoADisciplinas()
             };
             return atleta;
         }
