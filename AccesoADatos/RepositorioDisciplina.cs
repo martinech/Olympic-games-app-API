@@ -15,5 +15,10 @@ namespace AccesoADatos
         {
             return _contexto.Set<Disciplina>().ToList();
         }
+
+        public Disciplina GetDisciplinaPorId(int id)
+        {
+            return _contexto.Set<Disciplina>().FirstOrDefault(disciplina => disciplina.Id == id);
+        }
     }
 }

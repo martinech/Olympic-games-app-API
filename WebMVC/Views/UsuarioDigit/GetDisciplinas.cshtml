@@ -22,24 +22,26 @@
                 }
                 else
                 {
-                    <td>
-                        @foreach (var disciplina in Model.Atleta.Disciplinas)
-                        {
-                            <span>@disciplina.Nombre.Disciplina</span>
-                            <br />
-                        }
-                    </td>
+                <td>
+                    @foreach (var disciplina in Model.Atleta.Disciplinas)
+                    {
+                        <span>@disciplina.Nombre.Disciplina</span>
+                        <br />
+                    }
+                </td>
                 }
-            }
-            
+            }  
             <td>
-            <select>
-                @foreach (var disciplina in Model.Disciplinas)
-                {
-                    <option value="@disciplina.Id">@disciplina.Nombre.Disciplina</option>
-                }
-            </select>
-            <a asp-action="" class="btn btn-primary">Agregar</a>
+                <form asp-action="AgregarDisciplinaAlAtleta" method="post">
+                    <input type="hidden" name="idAtleta" value="@Model.Atleta.Id"/>
+                    <select name="idDisciplina">
+                        @foreach (var disciplina in Model.Disciplinas)
+                        {
+                            <option value="@disciplina.Id">@disciplina.Nombre.Disciplina</option>
+                        }
+                    </select>
+                    <input type="submit" class="btn btn-primary "value="Agregar"/>
+                </form>
             </td>
             </tr>
     </tbody>

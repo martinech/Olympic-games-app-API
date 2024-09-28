@@ -14,12 +14,14 @@ namespace WebMVC.Controllers
         private readonly IGetAtletaPorId _getAtletaPorId;
         private readonly IModificarAtleta _modificarAtleta;
         private readonly IGetDisciplinas _getDisciplinas;
+        private readonly IGetDisciplinaPorId _getDisciplinaPorId;
 
         public UsuarioDigitController(  IGetAtletas getAtletas,
                                         ICrearAtleta crearAtleta,
                                         IGetAtletaPorId getAtletaPorId,
                                         IModificarAtleta modificarAtleta,
-                                        IGetDisciplinas getDisciplinas)
+                                        IGetDisciplinas getDisciplinas,
+                                        IGetDisciplinaPorId getDisciplinaPorId)
 
         {
             _getAtletas = getAtletas;
@@ -27,6 +29,7 @@ namespace WebMVC.Controllers
             _getAtletaPorId = getAtletaPorId;
             _modificarAtleta = modificarAtleta;
             _getDisciplinas = getDisciplinas;
+            _getDisciplinaPorId = getDisciplinaPorId;
         }
 
         [HttpGet]
@@ -39,9 +42,7 @@ namespace WebMVC.Controllers
                 return View(gestAtlViewModel);
             }
             else
-            {
                 return RedirectToAction("Index", "Home");
-            }
         }
         [HttpGet]
         public IActionResult GetDisciplinas(int id)
@@ -50,6 +51,16 @@ namespace WebMVC.Controllers
             disciplinasVM.Disciplinas = _getDisciplinas.Ejecutar();
             disciplinasVM.Atleta = _getAtletaPorId.Ejecutar(id);
             return View(disciplinasVM);
+        }
+
+        [HttpPost]
+        public IActionResult AgregarDisciplinaAlAtleta(int idDisciplina, int idAtleta)
+        {
+            //DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(idDisciplina);
+            //AtletaDto atletaDto = _getAtletaPorId.Ejecutar(idAtleta);
+            //atletaDto.Disciplinas.Add();
+
+            return RedirectToAction("GetDisciplinas");
         }
     }
 }

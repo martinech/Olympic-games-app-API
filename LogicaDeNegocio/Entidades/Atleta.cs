@@ -11,6 +11,17 @@ namespace LogicaDeNegocio.Entidades
         public string Pais { get; set; }
         public List<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
 
+
+        //public List<Disciplina> DisciplinasDtoADisciplina(List<DisciplinaDto> disciplinas)
+        //{
+        //    List<Disciplina> disciplinasDto = new List<Disciplina>();
+
+        //    foreach (Disciplina disciplina in disciplinas)
+        //        disciplinasDto.Add(new Disciplina(disciplina));
+
+        //    return disciplinasDto;
+        //}
+
         public void Validar()
         {
             if (string.IsNullOrEmpty(Nombre))
