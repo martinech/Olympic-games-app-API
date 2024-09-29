@@ -16,7 +16,6 @@ namespace Dto
             Id = disciplina.Id;
             Nombre = disciplina.Nombre;
             AnioDeIntegracion = disciplina.AnioDeIntegracion;
-            AtletasDto = AtletasToAtletasDto(disciplina.Atletas);
         }
 
         public List<AtletaDto> AtletasToAtletasDto(List<Atleta> atletas)
@@ -54,7 +53,6 @@ namespace Dto
                 Id = Id,
                 Nombre = Nombre,
                 AnioDeIntegracion = AnioDeIntegracion,
-                Atletas = AtletasDtoToAtletas()
             };
             return disciplina;
         }

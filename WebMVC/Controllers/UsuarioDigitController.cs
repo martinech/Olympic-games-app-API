@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebMVC.Models;
-using Dto;
+﻿using Dto;
 using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
 using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
+using LogicaDeNegocio.Entidades;
+using Microsoft.AspNetCore.Mvc;
+using WebMVC.Models;
 
 namespace WebMVC.Controllers
 {
@@ -15,7 +16,7 @@ namespace WebMVC.Controllers
         private readonly IGetDisciplinas _getDisciplinas;
         private readonly IGetDisciplinaPorId _getDisciplinaPorId;
 
-        public UsuarioDigitController(  IGetAtletas getAtletas,
+        public UsuarioDigitController(IGetAtletas getAtletas,
                                         ICrearAtleta crearAtleta,
                                         IGetAtletaPorId getAtletaPorId,
                                         IModificarAtleta modificarAtleta,
@@ -48,10 +49,28 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult GetDisciplinas(int id)
         {
-            GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
-            disciplinasVM.DisciplinasDto = _getDisciplinas.Ejecutar();
-            disciplinasVM.AtletaDto = _getAtletaPorId.Ejecutar(id);
-            return View(disciplinasVM);
+            try
+            {
+                GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
+                disciplinasVM.DisciplinasDto = _getDisciplinas.Ejecutar();
+                disciplinasVM.AtletaDto = _getAtletaPorId.Ejecutar(id);
+
+                if (disciplinasVM.AtletaDto == null)
+                {
+                    // Maneja el caso en que no se encuentre el atleta
+                    return RedirectToAction("Error", "Home", new { mensaje = "Atleta no encontrado" });
+                }
+                else
+                {
+                    return View(disciplinasVM);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener atleta: {ex.Message}");
+                return RedirectToAction("Error", "Home", new { mensaje = "Se produjo un error inesperado" });
+            }
+
         }
 
         [HttpPost]
