@@ -44,6 +44,7 @@ namespace WebMVC.Controllers
                 return RedirectToAction("Index", "Home");
         }
 
+        //La ejecucion se corta porque en la linea 53, no carga al AtletaDto, las disciplinas de la linea 52 si, pero nunca llega al AletaDto.
         [HttpGet]
         public IActionResult GetDisciplinas(int id)
         {
