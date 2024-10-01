@@ -1,0 +1,48 @@
+﻿@model GestionDisciplinasViewModel
+
+@{
+    ViewData["Title"] = "Gestión de Disciplinas";
+}
+
+<p>Bienvenido @Context.Session.GetString("rolLogueado")</p>
+
+<h2>@ViewData["Title"]</h2>
+@if (TempData["MensajeError"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["MensajeError"]
+    </div>
+}
+<a asp-action="CrearDisciplina" class="btn btn-success" style="float: right">Crear Disciplina</a>
+
+<table class="table table-stripped mt-3">
+    <thead>
+        <tr>
+            <th>Disicplina</th>
+            <th>Año de integración</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var disciplina in Model.DisciplinasDto)
+        {
+            if(Context.Session.GetInt32("idLogueado") != disciplina.Id)
+            {
+                <tr>
+                    <td>@disciplina.Nombre.Disciplina</td>
+                    <td>@disciplina.AnioDeIntegracion</td>
+                    <td>
+                        <a asp-action="ModificarDisciplina" asp-route-id="@disciplina.Id" class="btn btn-success">Editar</a>
+                    </td>
+                    <td>
+                        <a asp-action="EliminarDisciplina" asp-route-id="@disciplina.Id" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<form asp-controller="Home" asp-action="Logout" method="post">
+    <input type="submit" value="Cerrar Sesion" class="btn btn-danger"/>
+</form>

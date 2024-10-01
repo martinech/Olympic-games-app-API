@@ -1,0 +1,16 @@
+﻿@model Dto.DisciplinaDto
+
+@{
+    ViewData["Title"] = "Eliminar Disciplina";
+}
+
+<h1>Esta a punto de eliminar una disciplina de la base de datos</h1>
+
+<form asp-action="EliminarDisciplina" method="post">
+
+    <p>@Model.Nombre.Disciplina</p>
+
+    <p>@Model.AnioDeIntegracion</p>
+    <a asp-action="GestionDeDisciplinas" class="btn btn-secondary">Volver</a>
+    <input type="submit" value="Eliminar" class="btn btn-danger"/>
+</form>

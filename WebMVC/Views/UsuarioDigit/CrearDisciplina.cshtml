@@ -1,0 +1,19 @@
+﻿@model Dto.DisciplinaDto
+
+@{
+    ViewData["Title"] = "Crear Disciplina";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="CrearDisciplina" method="post" id="formulario">
+    <label>Ingresar Nombre</label>
+    <input type="text" asp-for="Nombre" placeholder="Nombre de la disciplina" id="nombre"/><br /><br />
+    <label>Ingresar Año de Integración</label>
+    <input type="number" asp-for="AnioDeIntegracion" placeholder="Año de integración" id="anioIntegracion"/><br /><br />
+    <br /><br />
+    <a asp-action="GestionDeDisciplinas" class="btn btn-secondary">Volver</a>
+    <input type="submit" value="Guardar" class="btn btn-success" id="botonCrear"/>
+</form>
+<p id="parrafo"></p>
+<p>@ViewBag.mensaje</p>

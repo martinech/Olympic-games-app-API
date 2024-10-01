@@ -1,0 +1,32 @@
+﻿@model Dto.DisciplinaDto
+
+@{
+    ViewData["Titulo"] = "Modificar Disciplina";
+}
+
+<h1>Modificar Disciplina</h1>
+
+<form asp-action="ModificarDisciplina" method="post" id="formularioModificar">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Nombre.Disciplina)
+    @Html.HiddenFor(model => model.AnioDeIntegracion) 
+
+    <label>Modificar Nombre</label>
+    <input type="text" asp-for="Nombre.Disciplina" placeholder="Nombre de la disciplina" id="nombreModificar"/><br /><br />
+    <label>Modificar Año de Integración</label>
+    <input type="text" asp-for="AnioDeIntegracion" placeholder="Año de integración" id="anioModificar"/><br /><br />
+    <br /><br />
+    <a asp-action="GestionDeDisciplinas" class="btn btn-secondary">Volver</a>
+    <input type="submit" value="Guardar" class="btn btn-success" id="botonModificar"/>
+    <p id="parrafoModificar"></p>
+    <p>@ViewBag.mensaje</p>
+</form>
+
+@if (ViewBag.Errors != null)
+{
+    foreach (var error in ViewBag.Errors)
+    {
+        <p class="text-danger">@error</p>
+    }
+}
