@@ -17,7 +17,7 @@ function verificar(e) {
     else if (email == "" || password == "")
         parrafo.innerHTML = "Debe completar todos los campos";
     else
-        parrafo.innerHTML = "Debe ingresar un E-mail válido. La contraseña debe contener al menos: una mayúscula, una minúscula, un número y un signo de puntuación";
+        parrafo.innerHTML = "La contraseña debe contener al menos: una mayúscula, una minúscula, un número y un signo de puntuación";
 }
 
 function passwordEsValida(password) {

@@ -2,6 +2,7 @@
 using LogicaDeNegocio.InterfacesRepositorios;
 using LogicaDeNegocio.Entidades;
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
+using LogicaDeNegocio.Exceptions;
 
 namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
 {
@@ -15,9 +16,16 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
         }
         public void Ejecutar(UsuarioDto usuarioDto)
         {
-            Usuario usuarioNuevo = usuarioDto.ToUsuario();
-            usuarioNuevo.Validar();
-            _repositorioUsuario.Crear(usuarioNuevo);
+            try
+            {
+                Usuario usuarioNuevo = usuarioDto.ToUsuario();
+                usuarioNuevo.Validar();
+                _repositorioUsuario.Crear(usuarioNuevo);
+            }
+            catch(DatoInvalidoException)
+            {
+                throw new DatoInvalidoException("Email ya existente");
+            }
         }
     }
 }

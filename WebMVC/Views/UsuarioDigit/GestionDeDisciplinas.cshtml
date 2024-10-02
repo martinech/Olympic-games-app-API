@@ -29,7 +29,7 @@
             if(Context.Session.GetInt32("idLogueado") != disciplina.Id)
             {
                 <tr>
-                    <td>@disciplina.Nombre.Disciplina</td>
+                    <td>@disciplina.Nombre</td>
                     <td>@disciplina.AnioDeIntegracion</td>
                     <td>
                         <a asp-action="ModificarDisciplina" asp-route-id="@disciplina.Id" class="btn btn-success">Editar</a>

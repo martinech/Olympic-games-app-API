@@ -14,14 +14,7 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
 
         public void Ejecutar(int id)
         {
-            try
-            {
-                _repositorioUsuario.Eliminar(id);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            _repositorioUsuario.Eliminar(id);
         }
     }
 }

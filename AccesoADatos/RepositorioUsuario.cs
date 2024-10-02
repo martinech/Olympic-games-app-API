@@ -13,29 +13,20 @@ namespace AccesoADatos
         {
             _contexto = contexto;
         }
+
+        public Usuario Login(string email, string password)
+        {
+            return _contexto.Set<Usuario>().FirstOrDefault(u => u.Email == email && u.Password == password);
+        }
+
         public void Crear(Usuario usuario)
         {
             if (_contexto.Set<Usuario>().Any(u => u.Email == usuario.Email))
-                throw new UsuarioInvalidoException($"Ya existe un usuario con el email: {usuario.Email}");
+                throw new DatoInvalidoException();
             else
             {
                 _contexto.Set<Usuario>().Add(usuario);
                 _contexto.SaveChanges();
-            }
-        }
-
-        public void Eliminar(int id)
-        {
-            Usuario usuarioAEliminar = _contexto.Set<Usuario>().FirstOrDefault(t => t.Id == id);
-
-            if (usuarioAEliminar is not null)
-            {
-                _contexto.Set<Usuario>().Remove(usuarioAEliminar);
-                _contexto.SaveChanges();
-            }
-            else
-            {
-                throw new UsuarioInvalidoException("El usuario que desea eliminar no se ha encontrado");
             }
         }
 
@@ -49,16 +40,18 @@ namespace AccesoADatos
             return _contexto.Set<Usuario>().ToList();
         }
 
-        public Usuario Login(string email, string password)
-        {
-            return _contexto.Set<Usuario>().FirstOrDefault(u => u.Email == email && u.Password == password);
-        }
-
         public void Modificar(int id, Usuario usuario)
         {
             Usuario UsuarioAModificar = _contexto.Set<Usuario>().FirstOrDefault(t => t.Id == id);
             UsuarioAModificar.Copiar(usuario);
             _contexto.Entry(UsuarioAModificar).State = EntityState.Modified;
+            _contexto.SaveChanges();
+        }
+
+        public void Eliminar(int id)
+        {
+            Usuario usuarioAEliminar = _contexto.Set<Usuario>().FirstOrDefault(t => t.Id == id);
+            _contexto.Set<Usuario>().Remove(usuarioAEliminar);
             _contexto.SaveChanges();
         }
     }

@@ -8,7 +8,7 @@ using LogicaDeAplicacion.ImplementacionCU;
 using LogicaDeAplicacion.ImplementacionCU.UsuarioCU;
 using LogicaDeAplicacion.ImplementacionCU.AtletaCU;
 using LogicaDeAplicacion.ImplementacionCU.DisciplinaCU;
-
+//Pablo 02/10/24 - 06:25
 namespace WebMVC
 {
     public class Program
@@ -19,7 +19,7 @@ namespace WebMVC
             //Inyeccion del contexto.
             builder.Services.AddDbContext<DbContext, Contexto>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("StringDeConexionALaBD")));
-
+            
             //Inyeccion de un repositorio cada vez que se llama a una interface.
             builder.Services.AddScoped(typeof(IRepositorioUsuario), typeof(RepositorioUsuario));
             builder.Services.AddScoped(typeof(IRepositorioPais), typeof(RepositorioPais));

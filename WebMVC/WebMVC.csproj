@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\js\crear.js" />
-    <None Include="wwwroot\js\modificar.js" />
+    <None Include="wwwroot\js\validacionesUsuarios\crear.js" />
+    <None Include="wwwroot\js\validacionesUsuarios\modificar.js" />
   </ItemGroup>
 
   <ItemGroup>

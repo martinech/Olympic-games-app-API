@@ -27,7 +27,6 @@ namespace WebMVC.Controllers
             _getUsuarioPorId = getUsuarioPorId;
             _getUsuarios = getUsuarios;
             _modificarUsuario = modificarUsuario;
-
         }
 
         [HttpGet]
@@ -40,48 +39,47 @@ namespace WebMVC.Controllers
                 return View(model);
             }
             else
-                return RedirectToAction("Index", "Home");
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Home");
+            }
         }
+
         [HttpGet]
         public IActionResult CrearUsuario()
         {
             if (HttpContext.Session.GetString("rolLogueado") == "admin")
                 return View();
             else
-                return RedirectToAction("Index", "Home");
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Home");
+            }
         }
+
         [HttpPost]
         public IActionResult CrearUsuario(string email, string password, string rol)
         {
-            if (HttpContext.Session.GetString("rolLogueado") == "admin")
+            UsuarioDto nuevoUsuario = new UsuarioDto()
             {
-                UsuarioDto nuevoUsuario = new UsuarioDto()
-                {
-                    Email = email,
-                    Password = password,
-                    Rol = rol,
-                    FechaAlta = DateTime.Now,
-                    EmailAdministrador = HttpContext.Session.GetString("emailLogueado")
-                };
-                try
-                {
-                    _crearUsuario.Ejecutar(nuevoUsuario);
-                }
-                catch (UsuarioInvalidoException e)
-                {
-                    ViewBag.mensaje = e.Message;
-                    return View();
-                }
-                catch (DatoInvalidoException e)
-                {
-                    ViewBag.mensage = e.Message;
-                    return View();
-                }
-                return RedirectToAction("GestionDeUsuarios");
+                Email = email,
+                Password = password,
+                Rol = rol,
+                FechaAlta = DateTime.Now,
+                EmailAdministrador = HttpContext.Session.GetString("emailLogueado")
+            };
+            try
+            {
+                _crearUsuario.Ejecutar(nuevoUsuario);
             }
-            else
-                return RedirectToAction("Index", "Home");         
+            catch (DatoInvalidoException e)
+            {
+                ViewBag.mensaje = e.Message;
+                return View();
+            }
+            return RedirectToAction("GestionDeUsuarios");       
         }   
+
         [HttpGet]
         public IActionResult ModificarUsuario(int id)
         {
@@ -91,29 +89,27 @@ namespace WebMVC.Controllers
                 return View(usuarioDto);
             }
             else
-                return RedirectToAction("Index", "Home");  
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Home");
+            }
         }
 
         [HttpPost]
         public IActionResult ModificarUsuario(int id, UsuarioDto usuarioDto)
         {
-            if (HttpContext.Session.GetString("rolLogueado") == "admin")
+            try
             {
-                try
-                {
-                    _modificarUsuario.Ejecutar(id, usuarioDto);
-
-                }
-                catch (DatoInvalidoException e)
-                {
-                    ViewBag.mensaje = e.Message;
-                    return View();
-                }
-                return RedirectToAction("GestionDeUsuarios");
+                _modificarUsuario.Ejecutar(id, usuarioDto);
             }
-            else
-                return RedirectToAction("Index", "Home");
+            catch (DatoInvalidoException e)
+            {
+                ViewBag.mensaje = e.Message;
+                return View();
+            }
+            return RedirectToAction("GestionDeUsuarios");
         }
+
         [HttpGet]
         public IActionResult Eliminar(int id)
         {
@@ -131,18 +127,17 @@ namespace WebMVC.Controllers
                 }
             }
             else
-                return RedirectToAction("Index", "Home");
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Home");
+            }
         }
+
         [HttpPost]
         public IActionResult Eliminar(int id, UsuarioDto usuarioDto)
         {
-            if (HttpContext.Session.GetString("rolLogueado") == "admin")
-            {
-                _eliminarUsuario.Ejecutar(id);
-                return RedirectToAction("GestionDeUsuarios");
-            }
-            else
-                return RedirectToAction("Index", "Home");
+            _eliminarUsuario.Ejecutar(id);
+            return RedirectToAction("GestionDeUsuarios");
         }
     }
 }

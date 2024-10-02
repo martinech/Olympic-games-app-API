@@ -41,7 +41,7 @@ namespace Dto
                 disciplinas.Add(new Disciplina()
                 {
                     Id = disciplinaDto.Id,
-                    Nombre = disciplinaDto.Nombre,
+                    Nombre = new Nombre(Nombre),
                     AnioDeIntegracion = disciplinaDto.AnioDeIntegracion,
                     Atletas = disciplinaDto.AtletasDtoToAtletas()
                 });
