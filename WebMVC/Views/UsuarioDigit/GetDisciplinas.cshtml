@@ -37,7 +37,7 @@
                     <select name="idDisciplina">
                         @foreach (var disciplina in Model.DisciplinasDto)
                         {
-                            <option value="@disciplina.Id">@disciplina.Nombre.Disciplina</option>
+                            <option value="@disciplina.Id">@disciplina.Nombre</option>
                         }
                     </select>
                     <input type="submit" class="btn btn-primary "value="Agregar"/>
