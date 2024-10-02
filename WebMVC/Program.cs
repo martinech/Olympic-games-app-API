@@ -40,6 +40,7 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(IGetAtletaPorId), typeof(GetAtletaPorId));
             builder.Services.AddScoped(typeof(IGetAtletas), typeof(GetAtletas));
             builder.Services.AddScoped(typeof(IModificarAtleta), typeof(ModificarAtleta));
+            builder.Services.AddScoped(typeof(IAgregarDisciplinaAAtleta), typeof(AgregarDisciplinaAAtleta));
 
             //Inyeccion de dependencia para los CU disciplina
             builder.Services.AddScoped(typeof(IGetDisciplinas), typeof(GetDisciplinas));
@@ -47,6 +48,7 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(ICrearDisciplina), typeof(CrearDisciplina));
             builder.Services.AddScoped(typeof(IEliminarDisciplina), typeof(EliminarDisciplina));
             builder.Services.AddScoped(typeof(IModificarDisciplina), typeof(ModificarDisciplina));
+
 
 
 

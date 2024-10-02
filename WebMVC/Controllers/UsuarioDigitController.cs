@@ -19,6 +19,7 @@ namespace WebMVC.Controllers
         private readonly ICrearDisciplina _crearDisciplina;
         private readonly IEliminarDisciplina _eliminarDisciplina;
         private readonly IModificarDisciplina _modificarDisciplina;
+        private readonly IAgregarDisciplinaAAtleta _agregarDisciplinaAAtleta;
 
         public UsuarioDigitController(IGetAtletas getAtletas,
                                         ICrearAtleta crearAtleta,
@@ -28,7 +29,8 @@ namespace WebMVC.Controllers
                                         IGetDisciplinaPorId getDisciplinaPorId,
                                         ICrearDisciplina crearDisciplina,
                                         IEliminarDisciplina eliminarDisciplina,
-                                        IModificarDisciplina modificarDisciplina)
+                                        IModificarDisciplina modificarDisciplina,
+                                        IAgregarDisciplinaAAtleta agregarDisciplinaAAtleta)
 
         {
             _getAtletas = getAtletas;
@@ -40,6 +42,7 @@ namespace WebMVC.Controllers
             _crearDisciplina = crearDisciplina;
             _eliminarDisciplina = eliminarDisciplina;
             _modificarDisciplina = modificarDisciplina;
+            _agregarDisciplinaAAtleta = agregarDisciplinaAAtleta;
         }
 
         [HttpGet]
@@ -106,17 +109,13 @@ namespace WebMVC.Controllers
                 Console.WriteLine($"Error al obtener disciplinas {ex.Message}");
                 return RedirectToAction("Error", "Home", new { mensaje = "Se produjo un error inesperado" });
             }
-
         }
 
         [HttpPost]
         public IActionResult AgregarDisciplinaAlAtleta(int idDisciplina, int idAtleta)
         {
-            DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(idDisciplina);
-            AtletaDto atletaDto = _getAtletaPorId.Ejecutar(idAtleta);
-            atletaDto.DisciplinasDto.Add(disciplinaDto);
-            _modificarAtleta.Ejecutar(idAtleta, atletaDto);
-            return RedirectToAction("GetDisciplinas");
+            _agregarDisciplinaAAtleta.Ejecutar(idAtleta, idDisciplina);
+            return RedirectToAction("GetDisciplinas", new { id = idAtleta });
         }
         [HttpGet]
         public IActionResult CrearDisciplina()
