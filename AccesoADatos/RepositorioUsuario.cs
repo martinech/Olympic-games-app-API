@@ -22,7 +22,7 @@ namespace AccesoADatos
         public void Crear(Usuario usuario)
         {
             if (_contexto.Set<Usuario>().Any(u => u.Email == usuario.Email))
-                throw new DatoInvalidoException();
+                throw new DatoInvalidoException("Ya existe un usuario con este email");
             else
             {
                 _contexto.Set<Usuario>().Add(usuario);

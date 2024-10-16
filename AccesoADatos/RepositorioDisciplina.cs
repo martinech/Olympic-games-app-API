@@ -14,8 +14,14 @@ namespace AccesoADatos
         }
         public void Crear(Disciplina disciplina)
         {
-            _contexto.Set<Disciplina>().Add(disciplina);
-            _contexto.SaveChanges();
+            if (_contexto.Set<Disciplina>().Any(d => d.Nombre.Disciplina == disciplina.Nombre.Disciplina))
+                throw new DatoInvalidoException("Ya existe una disciplina no este nombre");
+            else
+            {
+                _contexto.Set<Disciplina>().Add(disciplina);
+                _contexto.SaveChanges();
+            }
+            
         }
         public IEnumerable<Disciplina> GetDisciplinas()
         {
