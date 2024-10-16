@@ -11,8 +11,4 @@
     <ProjectReference Include="..\LogicaDeNegocio\LogicaDeNegocio.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="InterfacesCU\IEventoCU\" />
-  </ItemGroup>
-
 </Project>
