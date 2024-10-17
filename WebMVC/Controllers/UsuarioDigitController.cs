@@ -67,10 +67,10 @@ namespace WebMVC.Controllers
             try
             {
                 GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
-                disciplinasVM.DisciplinasDto = _getDisciplinas.Ejecutar();
-                disciplinasVM.AtletaDto = _getAtletaPorId.Ejecutar(id);
+                disciplinasVM.Disciplinas = _getDisciplinas.Ejecutar();
+                disciplinasVM.Atleta = _getAtletaPorId.Ejecutar(id);
 
-                if (disciplinasVM.AtletaDto == null)
+                if (disciplinasVM.Atleta == null)
                 {
                     // Maneja el caso en que no se encuentre el atleta
                     return RedirectToAction("Error", "Home", new { mensaje = "Atleta no encontrado" });
@@ -94,9 +94,9 @@ namespace WebMVC.Controllers
                 try
                 {
                     GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
-                    disciplinasVM.DisciplinasDto = _getDisciplinas.Ejecutar();
+                    disciplinasVM.Disciplinas = _getDisciplinas.Ejecutar();
 
-                    if (disciplinasVM.DisciplinasDto == null || !disciplinasVM.DisciplinasDto.Any())
+                    if (disciplinasVM.Disciplinas == null || !disciplinasVM.Disciplinas.Any())
                     {
                         // Maneja el caso en que no se encuentren disciplinas
                         return RedirectToAction("Error", "Home", new { mensaje = "No hay disciplinas ingresadas" });

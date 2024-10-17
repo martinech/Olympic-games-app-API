@@ -43,6 +43,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="UsuarioDigit" asp-action="GestionDeDisciplinas">Disciplinas</a>
                             </li>
                         }
+                        @if (Context.Session.GetString("rolLogueado") == "digit" || Context.Session.GetString("rolLogueado") == "admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UsuarioAdmin" asp-action="GestionDeEventos">Eventos</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

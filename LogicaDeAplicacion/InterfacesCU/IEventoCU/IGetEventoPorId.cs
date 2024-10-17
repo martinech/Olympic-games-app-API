@@ -1,9 +1,9 @@
 ﻿using Dto;
 
-namespace LogicaDeAplicacion.InterfacesCU.IUsuarioCU
+namespace LogicaDeAplicacion.InterfacesCU.IEventoCU
 {
-    public interface IGetUsuarioPorId
+    public interface IGetEventoPorId
     {
-        UsuarioDto Ejecutar(int id);
+        EventoDto Ejecutar(int id);
     }
 }

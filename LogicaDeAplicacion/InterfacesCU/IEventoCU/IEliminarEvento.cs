@@ -1,6 +1,6 @@
-﻿namespace LogicaDeAplicacion.InterfacesCU.IUsuarioCU
+﻿namespace LogicaDeAplicacion.InterfacesCU.IEventoCU
 {
-    public interface IEliminarUsuario
+    public interface IEliminarEvento
     {
         void Ejecutar(int id);
     }

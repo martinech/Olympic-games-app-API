@@ -1,0 +1,49 @@
+﻿@model GestionEventosViewModel
+
+@{
+    ViewData["Title"] = "Gestión de Eventos";
+}
+
+<p>Bienvenido @Context.Session.GetString("rolLogueado")</p>
+
+<h2>@ViewData["Title"]</h2>
+@if (TempData["MensajeError"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["MensajeError"]
+    </div>
+}
+<a asp-action="CrearEvento" class="btn btn-success" style="float: right">Crear Evento</a>
+
+<table class="table table-stripped mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Disciplina</th>
+            <th>Fecha de inicio</th>
+            <th>Fecha de finzalización</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var evento in Model.Eventos)
+        {
+            <tr>
+                <td>@evento.Nombre</td>
+                <td>@evento.Disciplina.Nombre.Disciplina</td>
+                <td>@evento.FechaInicio.ToString("dd-MM-yyyy")</td>
+                <td>@evento.FechaFin.ToString("dd-MM-yyyy")</td>
+                <td>
+                    <a asp-action="ModificarEvento" asp-route-id="@evento.Id" class="btn btn-success">Editar</a>
+                </td>
+                <td>
+                    <a asp-action="EliminarEvento" asp-route-id="@evento.Id" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-controller="Home" asp-action="Logout" method="post">
+    <input type="submit" value="Cerrar Sesion" class="btn btn-danger"/>
+</form>

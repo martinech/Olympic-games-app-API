@@ -14,16 +14,16 @@
     </thead>
     <tbody>
         <tr>
-            <td>@Model.AtletaDto.Nombre</td>
+            <td>@Model.Atleta.Nombre</td>
             @{
-                if (Model.AtletaDto.DisciplinasDto == null || !Model.AtletaDto.DisciplinasDto.Any())
+                if (Model.Atleta.DisciplinasDto == null || !Model.Atleta.DisciplinasDto.Any())
                 {
                     <td>Aun no hay disciplinas asignadas</td>
                 }
                 else
                 {
                 <td>
-                        @foreach (var disciplina in Model.AtletaDto.DisciplinasDto)
+                        @foreach (var disciplina in Model.Atleta.DisciplinasDto)
                     {
                         <span>@disciplina.Nombre</span>
                         <br />
@@ -33,9 +33,9 @@
             }  
             <td>
                 <form asp-action="AgregarDisciplinaAlAtleta" method="post">
-                    <input type="hidden" name="idAtleta" value="@Model.AtletaDto.Id" />
+                    <input type="hidden" name="idAtleta" value="@Model.Atleta.Id" />
                     <select name="idDisciplina">
-                        @foreach (var disciplina in Model.DisciplinasDto)
+                        @foreach (var disciplina in Model.Disciplinas)
                         {
                             <option value="@disciplina.Id">@disciplina.Nombre</option>
                         }

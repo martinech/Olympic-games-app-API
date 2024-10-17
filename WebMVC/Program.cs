@@ -4,10 +4,12 @@ using LogicaDeNegocio.InterfacesRepositorios;
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
 using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
+using LogicaDeAplicacion.InterfacesCU.IEventoCU;
 using LogicaDeAplicacion.ImplementacionCU;
 using LogicaDeAplicacion.ImplementacionCU.UsuarioCU;
 using LogicaDeAplicacion.ImplementacionCU.AtletaCU;
 using LogicaDeAplicacion.ImplementacionCU.DisciplinaCU;
+using LogicaDeAplicacion.ImplementacionCU.EventoCU;
 //Pablo 02/10/24 - 06:25
 namespace WebMVC
 {
@@ -25,6 +27,7 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(IRepositorioPais), typeof(RepositorioPais));
             builder.Services.AddScoped(typeof(IRepositorioAtleta), typeof(RepositorioAtleta));
             builder.Services.AddScoped(typeof(IRepositorioDisciplina), typeof(RepositorioDisciplina));
+            builder.Services.AddScoped(typeof(IRepositorioEvento), typeof(RepositorioEvento));
 
             //Inyeccion de un caso de uso cada vez que se llama a la interface correspondiente.
             builder.Services.AddScoped(typeof(ICrearUsuario), typeof(CrearUsuario));
@@ -48,6 +51,13 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(ICrearDisciplina), typeof(CrearDisciplina));
             builder.Services.AddScoped(typeof(IEliminarDisciplina), typeof(EliminarDisciplina));
             builder.Services.AddScoped(typeof(IModificarDisciplina), typeof(ModificarDisciplina));
+
+            //Inyeccion de dependencia para los CU evento
+            builder.Services.AddScoped(typeof(IGetEventos), typeof(GetEventos));
+            builder.Services.AddScoped(typeof(IGetEventoPorId), typeof(GetEventoPorId));
+            builder.Services.AddScoped(typeof(ICrearEvento), typeof(CrearEvento));
+            builder.Services.AddScoped(typeof(IEliminarEvento), typeof(EliminarEvento));
+            builder.Services.AddScoped(typeof(IModificarEvento), typeof(ModificarEvento));
 
 
 
