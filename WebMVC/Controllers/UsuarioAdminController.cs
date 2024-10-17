@@ -188,7 +188,7 @@ namespace WebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CrearEvento(string nombre, Disciplina disciplina, DateTime fechaInicio, DateTime fechaFin)
+        public IActionResult CrearEvento(string nombre, string disciplina, DateTime fechaInicio, DateTime fechaFin)
         {
             EventoDto nuevoEvento = new EventoDto()
             {

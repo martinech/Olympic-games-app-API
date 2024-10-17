@@ -11,7 +11,8 @@ namespace LogicaDeNegocio.Entidades
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public Disciplina Disciplina { get; set; }
+        public string Disciplina { get; set; }
+        //public List<Atleta> Atletas { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin {  get; set; }
 
@@ -22,7 +23,7 @@ namespace LogicaDeNegocio.Entidades
         {
             if (string.IsNullOrEmpty(Nombre))
                 throw new DatoInvalidoException("El nombre no puede ser vacio");
-            if (Disciplina == null)
+            if (string.IsNullOrEmpty(Disciplina))
                 throw new DatoInvalidoException("La disciplina no puede ser vacia");
             if (FechaInicio == DateTime.MinValue)
                 throw new DatoInvalidoException("La fecha de inicio no puede ser vacia");

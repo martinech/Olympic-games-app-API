@@ -82,6 +82,33 @@ namespace AccesoADatos.Migrations
                     b.ToTable("Disciplinas");
                 });
 
+            modelBuilder.Entity("LogicaDeNegocio.Entidades.Evento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Disciplina")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Eventos");
+                });
+
             modelBuilder.Entity("LogicaDeNegocio.Entidades.Pais", b =>
                 {
                     b.Property<int>("Id")
