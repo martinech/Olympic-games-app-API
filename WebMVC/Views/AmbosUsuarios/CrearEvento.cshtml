@@ -1,0 +1,23 @@
+﻿@model CrearEventoViewModel
+
+@{
+    ViewData["Title"] = "Crear evento";
+}
+
+<center>
+    <h1>Crear nuevo evento</h1>
+    <br /><br />
+    <form method="post" asp-action="CrearEvento2">
+        <h4>Nombre</h4>
+        <input type="text" name="nombreEvento" placeholder="Nombre del evento" /><br /><br />
+        <h4>Disciplina</h4><br />
+        <select name="idDisciplina">
+            @foreach (var disciplina in Model.disciplinas)
+            {
+                <option value="@disciplina.Id">@disciplina.Nombre</option>
+            }
+        </select>
+        <br /><br />
+        <input class="btn btn-success" type="submit" value="Continuar" />
+    </form>
+</center>

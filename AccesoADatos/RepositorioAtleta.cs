@@ -51,5 +51,11 @@ namespace AccesoADatos
             _contexto.Entry(AtletaAModificar).State = EntityState.Modified;
             _contexto.SaveChanges();
         }
+
+        public IEnumerable<Atleta> GetAtletasPorDisciplina(int idDisciplina)
+        {
+            return _contexto.Set<Atleta>().Include(atleta => atleta.Disciplinas).Where(atleta => atleta.Disciplinas.Any(disciplina => disciplina.Id == idDisciplina)).ToList();
+        }
+
     }
 }

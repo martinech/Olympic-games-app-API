@@ -1,0 +1,15 @@
+﻿@model CrearEventoViewModel
+
+@{
+    ViewData["Title"] = "Crear evento";
+}
+
+<center>
+    <label>Seleccione el Atleta</label>
+    <select>
+        @foreach(var atleta in Model.atletas)
+        {
+            <option value="@atleta.Id">@atleta.Nombre</option>
+        }
+    </select>
+</center>

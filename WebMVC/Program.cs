@@ -44,6 +44,7 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(IGetAtletas), typeof(GetAtletas));
             builder.Services.AddScoped(typeof(IModificarAtleta), typeof(ModificarAtleta));
             builder.Services.AddScoped(typeof(IAgregarDisciplinaAAtleta), typeof(AgregarDisciplinaAAtleta));
+            builder.Services.AddScoped(typeof(IGetAtletasPorDisciplina), typeof(GetAtletasPorDisciplina));
 
             //Inyeccion de dependencia para los CU disciplina
             builder.Services.AddScoped(typeof(IGetDisciplinas), typeof(GetDisciplinas));
@@ -86,7 +87,7 @@ namespace WebMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Login}/{id?}");
+                pattern: "{controller=AmbosUsuarios}/{action=Login}/{id?}");
 
             app.Run();
         }

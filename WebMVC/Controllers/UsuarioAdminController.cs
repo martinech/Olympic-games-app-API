@@ -158,35 +158,6 @@ namespace WebMVC.Controllers
             return RedirectToAction("GestionDeUsuarios");
         }
 
-        //EVENTOS
-        [HttpGet]
-        public IActionResult GestionDeEventos()
-        {
-            if (HttpContext.Session.GetString("rolLogueado") == "admin" || HttpContext.Session.GetString("rolLogueado") == "digit")
-            {
-                GestionEventosViewModel model = new GestionEventosViewModel();
-                model.Eventos = _getEventos.Ejecutar();
-                return View(model);
-            }
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
-        }
-
-        [HttpGet]
-        public IActionResult CrearEvento()
-        {
-            if (HttpContext.Session.GetString("rolLogueado") == "admin" || HttpContext.Session.GetString("rolLogueado") == "digit")
-                return View();
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
-        }
-
         [HttpPost]
         public IActionResult CrearEvento(string nombre, string disciplina, DateTime fechaInicio, DateTime fechaFin)
         {

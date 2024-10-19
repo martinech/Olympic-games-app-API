@@ -34,5 +34,10 @@ namespace LogicaDeNegocio.Entidades
         {
             return Disciplinas;
         }
+
+        public override string ToString()
+        {
+            return Nombre + " " + Apellido;
+        }
     }
 }

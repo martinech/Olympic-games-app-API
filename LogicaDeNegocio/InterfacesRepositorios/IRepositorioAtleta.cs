@@ -9,5 +9,6 @@ namespace LogicaDeNegocio.InterfacesRepositorios
         Atleta GetAtletaPorId(int id);
         void Modificar(int id, Atleta atleta);
         void Eliminar(int id);
+        public IEnumerable<Atleta> GetAtletasPorDisciplina(int idDisciplina);
     }
 }
