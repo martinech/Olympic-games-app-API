@@ -17,12 +17,16 @@ namespace WebMVC.Controllers
         private readonly IGetEventos _getEventos;
         private readonly IGetDisciplinas _getDisciplinas;
         private readonly IGetAtletasPorDisciplina _getAtletasPorDisciplina;
+        private readonly IGetDisciplinaPorId _getDisciplinaPorId;
+        private readonly ICrearEvento _crearEvento;
 
         public AmbosUsuariosController( ILogger<AmbosUsuariosController> logger, 
                                         ILoginUsuario loginUsuario,
                                         IGetEventos getEventos,
                                         IGetDisciplinas getDisciplinas,
-                                        IGetAtletasPorDisciplina getAtletasPorDisciplina)
+                                        IGetAtletasPorDisciplina getAtletasPorDisciplina,
+                                        IGetDisciplinaPorId getDisciplinaPorId,
+                                        ICrearEvento crearEvento)
 
         {
             _logger = logger;
@@ -30,6 +34,8 @@ namespace WebMVC.Controllers
             _getEventos = getEventos;
             _getDisciplinas = getDisciplinas;
             _getAtletasPorDisciplina = getAtletasPorDisciplina;
+            _getDisciplinaPorId = getDisciplinaPorId;
+            _crearEvento = crearEvento;
         }
 
         [HttpGet]
@@ -97,15 +103,39 @@ namespace WebMVC.Controllers
                 return RedirectToAction("Login", "Home");
         }
 
-        [HttpPost]
-        public IActionResult CrearEvento2(int idDisciplina, string nombreEvento)
+        [HttpGet, HttpPost]
+        public IActionResult CrearEvento2(string nombreEvento, int idDisciplina)
         {
-            TempData["idDisciplina"] = idDisciplina;
             TempData["nombreEvento"] = nombreEvento;
+            TempData["idDisciplina"] = idDisciplina;
             CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
             crearEventoVM.atletas = _getAtletasPorDisciplina.Ejecutar(idDisciplina);
             return View(crearEventoVM);
         }
+
+        [HttpPost]
+        public IActionResult CrearEvento3(DateTime fechaInicio, DateTime fechaFinal)
+        {
+            try 
+            {
+                DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar((int)TempData["idDisciplina"]);
+                EventoDto eventoDto = new EventoDto()
+                {
+                    Nombre = (string)TempData["nombreEvento"],
+                    Disciplina = disciplinaDto.Nombre,
+                    FechaInicio = fechaInicio,
+                    FechaFin = fechaFinal
+                };
+                _crearEvento.Ejecutar(eventoDto);
+            }
+            catch(Exception e)
+            {
+                TempData["nombreEventoRepetido"] = e.Message;
+                return RedirectToAction("CrearEvento2");
+            }
+            return RedirectToAction("GestionDeEventos");
+        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

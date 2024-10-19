@@ -5,11 +5,21 @@
 }
 
 <center>
-    <label>Seleccione el Atleta</label>
-    <select>
-        @foreach(var atleta in Model.atletas)
-        {
-            <option value="@atleta.Id">@atleta.Nombre</option>
-        }
-    </select>
+    <form method="post" asp-action="CrearEvento3">
+        <h1>Crear nuevo evento</h1>
+        <label>Seleccione el Atleta</label>
+        <select name="idAtleta">
+            @foreach (var atleta in Model.atletas)
+            {
+                <option value="@atleta.Id">@atleta.ToString()</option>
+            }
+        </select><br /><br />
+        <label>Fecha de inicio:</label>
+        <input type="date" name="fechaInicio" /><br /><br />
+        <label>Fecha de inicio:</label>
+        <input type="date" name="fechaFinal" /><br /><br />
+        <a class="btn btn-secondary" asp-action="CrearEvento">Volver</a>
+        <input class="btn btn-success" type="submit" value="Crear Evento"/>
+    </form>
+    <p>@TempData["nombreEventoRepetido"]</p>
 </center>

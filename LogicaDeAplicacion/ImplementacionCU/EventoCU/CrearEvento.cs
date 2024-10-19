@@ -24,7 +24,7 @@ namespace LogicaDeAplicacion.ImplementacionCU.EventoCU
             }
             catch(DatoInvalidoException)
             {
-                throw new DatoInvalidoException("Email ya existente");
+                throw new DatoInvalidoException("Nombre ya existente");
             }
         }
     }

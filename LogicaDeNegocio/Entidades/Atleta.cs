@@ -29,15 +29,5 @@ namespace LogicaDeNegocio.Entidades
             Pais = atleta.Pais;
             Disciplinas = atleta.Disciplinas;
         }
-
-        public List<Disciplina> GetDesciplinasDelAtleta()
-        {
-            return Disciplinas;
-        }
-
-        public override string ToString()
-        {
-            return Nombre + " " + Apellido;
-        }
     }
 }

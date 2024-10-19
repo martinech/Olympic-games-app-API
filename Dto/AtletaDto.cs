@@ -62,5 +62,10 @@ namespace Dto
             };
             return atleta;
         }
+
+        public override string ToString()
+        {
+            return Nombre + " " + Apellido;
+        }
     }
 }

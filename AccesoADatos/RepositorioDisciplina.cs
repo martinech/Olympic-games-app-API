@@ -47,11 +47,6 @@ namespace AccesoADatos
             }
         }
 
-        public Disciplina GetUsuarioPorId(int id)
-        {
-            return _contexto.Set<Disciplina>().FirstOrDefault(d => d.Id == id);
-        }
-
         public void Modificar(int id, Disciplina disciplina)
         {
             Disciplina DisciplinaAModificar = _contexto.Set<Disciplina>().FirstOrDefault(t => t.Id == id);
