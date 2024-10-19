@@ -23,6 +23,18 @@ namespace AccesoADatos
             modelBuilder.Entity<Atleta>(atleta => atleta.HasKey(a => a.Id));
             modelBuilder.Entity<Disciplina>().OwnsOne(disciplina => disciplina.Nombre);
             modelBuilder.Entity<Evento>(evento => evento.HasKey(e => e.Id));
+            modelBuilder.Entity<EventoAtleta>(eventoatleta => eventoatleta.HasKey(ea => new {ea.idEvento, ea.idAtleta}));
+
+            modelBuilder.Entity<EventoAtleta>()
+                .HasOne(ea => ea.evento)
+                .WithMany(evento => evento.EventoAtletas)
+                .HasForeignKey(ea => ea.idEvento);
+
+            modelBuilder.Entity<EventoAtleta>()
+                .HasOne(ea => ea.atleta)
+                .WithMany(atleta => atleta.EventoAtletas)
+                .HasForeignKey(ea => ea.idAtleta);
+
             base.OnModelCreating(modelBuilder);
         }
     }

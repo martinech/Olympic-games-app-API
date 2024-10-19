@@ -16,16 +16,14 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
         }
         public void Ejecutar(UsuarioDto usuarioDto)
         {
-            try
+            IEnumerable<Usuario> usuariosExistentes = _repositorioUsuario.GetUsuarios();
+            if (usuariosExistentes.Any(u => u.Email.Equals(usuarioDto.Email)))
             {
-                Usuario usuarioNuevo = usuarioDto.ToUsuario();
+                throw new DatoInvalidoException("Ya existe un usuario con ese nombre.");
+            }
+            Usuario usuarioNuevo = usuarioDto.ToUsuario();
                 usuarioNuevo.Validar();
                 _repositorioUsuario.Crear(usuarioNuevo);
             }
-            catch(DatoInvalidoException)
-            {
-                throw new DatoInvalidoException("Email ya existente");
-            }
         }
     }
-}

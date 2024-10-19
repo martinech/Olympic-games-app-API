@@ -1,8 +1,8 @@
 ﻿using Dto;
-using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeNegocio.Entidades;
 using LogicaDeAplicacion.InterfacesCU.IEventoCU;
+using LogicaDeNegocio.Entidades;
 using LogicaDeNegocio.Exceptions;
+using LogicaDeNegocio.InterfacesRepositorios;
 
 namespace LogicaDeAplicacion.ImplementacionCU.EventoCU
 {
@@ -16,16 +16,15 @@ namespace LogicaDeAplicacion.ImplementacionCU.EventoCU
         }
         public void Ejecutar(EventoDto eventoDto)
         {
-            try
+            IEnumerable<Evento> eventosExistentes = _repositorioEvento.GetEventos();
+            if (eventosExistentes.Any(e => e.Nombre.Equals(eventoDto.Nombre)))
             {
-                Evento eventoNuevo = eventoDto.ToEvento();
-                eventoNuevo.Validar();
-                _repositorioEvento.Crear(eventoNuevo);
+                throw new DatoInvalidoException("Ya existe un evento con ese nombre.");
             }
-            catch(DatoInvalidoException)
-            {
-                throw new DatoInvalidoException("Nombre ya existente");
-            }
+
+            Evento eventoNuevo = eventoDto.ToEvento();
+            eventoNuevo.Validar();
+            _repositorioEvento.Crear(eventoNuevo);
         }
     }
 }

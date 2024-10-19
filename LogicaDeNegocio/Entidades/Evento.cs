@@ -7,6 +7,7 @@ namespace LogicaDeNegocio.Entidades
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Disciplina { get; set; }
+        public List<EventoAtleta> EventoAtletas { get; set; } = new List<EventoAtleta>();
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin {  get; set; }
 
@@ -20,7 +21,7 @@ namespace LogicaDeNegocio.Entidades
             if (string.IsNullOrEmpty(Disciplina))
                 throw new DatoInvalidoException("La disciplina no puede ser vacia");
             if (FechaInicio == DateTime.MinValue)
-                throw new DatoInvalidoException("La fecha de inicio no puede ser vacia");
+                throw new DatoInvalidoException("Indique una fecha de inicio");
         }
 
         public void Copiar(Evento evento)
@@ -30,6 +31,7 @@ namespace LogicaDeNegocio.Entidades
             Disciplina = evento.Disciplina;
             FechaInicio = evento.FechaInicio;
             FechaFin = evento.FechaFin;
+            EventoAtletas = evento.EventoAtletas;
         }
     }
 }

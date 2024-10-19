@@ -10,6 +10,7 @@ namespace LogicaDeNegocio.Entidades
         public string Sexo { get; set; }
         public string Pais { get; set; }
         public List<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
+        public List<EventoAtleta> EventoAtletas { get; set; } = new List<EventoAtleta>();
 
         public void Validar()
         {

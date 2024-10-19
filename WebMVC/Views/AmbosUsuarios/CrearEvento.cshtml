@@ -22,6 +22,11 @@
         <input class="btn btn-success" type="submit" value="Continuar" id="botonCrearEvento" />
     </form>
     <p id="parrafoEvento"></p>
+    @if (ViewBag.ErrorMensaje != null)
+    {
+        <p>@ViewBag.ErrorMensaje</p>
+    }
 </center>
+
 
 <script type="text/javascript" src="~/js/validacionesEventos/crearEvento.js"></script>

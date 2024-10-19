@@ -7,6 +7,7 @@ using LogicaDeNegocio.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebMVC.Models;
+using LogicaDeNegocio.Entidades;
 
 namespace WebMVC.Controllers
 {
@@ -97,6 +98,10 @@ namespace WebMVC.Controllers
             {
                 CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
                 crearEventoVM.disciplinas = _getDisciplinas.Ejecutar();
+                if (TempData["nombreEventoRepetido"] != null)
+                {
+                    ViewBag.ErrorMensaje = TempData["nombreEventoRepetido"].ToString();
+                }
                 return View(crearEventoVM);
             }
             else
@@ -116,9 +121,25 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult CrearEvento3(DateTime fechaInicio, DateTime fechaFinal)
         {
+            if (fechaInicio == DateTime.MinValue || fechaFinal==DateTime.MinValue)
+            {
+                ViewBag.ErrorMensaje = "Debe ingresar una fecha de inicio y finalización válida.";
+                CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
+                string NombreEvento = TempData["nombreEvento"]?.ToString();
+                int idDisciplina = (int)TempData["idDisciplina"];
+                crearEventoVM.atletas = _getAtletasPorDisciplina.Ejecutar(idDisciplina);
+                TempData.Keep("nombreEvento");
+                TempData.Keep("idDisciplina");
+
+                return View("CrearEvento2", crearEventoVM);
+            }
             try 
             {
-                DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar((int)TempData["idDisciplina"]);
+                string NombreEvento = TempData["nombreEvento"]?.ToString();
+                int idDisciplina = (int)TempData["idDisciplina"];
+                CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
+                crearEventoVM.atletas = _getAtletasPorDisciplina.Ejecutar(idDisciplina);
+                DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(idDisciplina);
                 EventoDto eventoDto = new EventoDto()
                 {
                     Nombre = (string)TempData["nombreEvento"],
@@ -131,7 +152,8 @@ namespace WebMVC.Controllers
             catch(Exception e)
             {
                 TempData["nombreEventoRepetido"] = e.Message;
-                return RedirectToAction("CrearEvento2");
+                return RedirectToAction("CrearEvento");
+
             }
             return RedirectToAction("GestionDeEventos");
         }

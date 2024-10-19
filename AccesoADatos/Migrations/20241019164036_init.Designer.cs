@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoADatos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20241019040929_init")]
+    [Migration("20241019164036_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -112,6 +112,24 @@ namespace AccesoADatos.Migrations
                     b.ToTable("Eventos");
                 });
 
+            modelBuilder.Entity("LogicaDeNegocio.Entidades.EventoAtleta", b =>
+                {
+                    b.Property<int>("idEvento")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idAtleta")
+                        .HasColumnType("int");
+
+                    b.Property<int>("puntaje")
+                        .HasColumnType("int");
+
+                    b.HasKey("idEvento", "idAtleta");
+
+                    b.HasIndex("idAtleta");
+
+                    b.ToTable("EventoAtleta");
+                });
+
             modelBuilder.Entity("LogicaDeNegocio.Entidades.Pais", b =>
                 {
                     b.Property<int>("Id")
@@ -208,6 +226,35 @@ namespace AccesoADatos.Migrations
 
                     b.Navigation("Nombre")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("LogicaDeNegocio.Entidades.EventoAtleta", b =>
+                {
+                    b.HasOne("LogicaDeNegocio.Entidades.Atleta", "atleta")
+                        .WithMany("EventoAtletas")
+                        .HasForeignKey("idAtleta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LogicaDeNegocio.Entidades.Evento", "evento")
+                        .WithMany("EventoAtletas")
+                        .HasForeignKey("idEvento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("atleta");
+
+                    b.Navigation("evento");
+                });
+
+            modelBuilder.Entity("LogicaDeNegocio.Entidades.Atleta", b =>
+                {
+                    b.Navigation("EventoAtletas");
+                });
+
+            modelBuilder.Entity("LogicaDeNegocio.Entidades.Evento", b =>
+                {
+                    b.Navigation("EventoAtletas");
                 });
 #pragma warning restore 612, 618
         }

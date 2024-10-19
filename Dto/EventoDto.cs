@@ -7,6 +7,7 @@ namespace Dto
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Disciplina { get; set; }
+        //public List<AtletaDto> Atletas { get; set; } = new List<AtletaDto>();
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
 

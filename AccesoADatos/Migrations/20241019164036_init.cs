@@ -114,10 +114,40 @@ namespace AccesoADatos.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EventoAtleta",
+                columns: table => new
+                {
+                    idEvento = table.Column<int>(type: "int", nullable: false),
+                    idAtleta = table.Column<int>(type: "int", nullable: false),
+                    puntaje = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventoAtleta", x => new { x.idEvento, x.idAtleta });
+                    table.ForeignKey(
+                        name: "FK_EventoAtleta_Atletas_idAtleta",
+                        column: x => x.idAtleta,
+                        principalTable: "Atletas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventoAtleta_Eventos_idEvento",
+                        column: x => x.idEvento,
+                        principalTable: "Eventos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AtletaDisciplina_DisciplinasId",
                 table: "AtletaDisciplina",
                 column: "DisciplinasId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventoAtleta_idAtleta",
+                table: "EventoAtleta",
+                column: "idAtleta");
         }
 
         /// <inheritdoc />
@@ -127,7 +157,7 @@ namespace AccesoADatos.Migrations
                 name: "AtletaDisciplina");
 
             migrationBuilder.DropTable(
-                name: "Eventos");
+                name: "EventoAtleta");
 
             migrationBuilder.DropTable(
                 name: "Paises");
@@ -136,10 +166,13 @@ namespace AccesoADatos.Migrations
                 name: "Usuario");
 
             migrationBuilder.DropTable(
+                name: "Disciplinas");
+
+            migrationBuilder.DropTable(
                 name: "Atletas");
 
             migrationBuilder.DropTable(
-                name: "Disciplinas");
+                name: "Eventos");
         }
     }
 }

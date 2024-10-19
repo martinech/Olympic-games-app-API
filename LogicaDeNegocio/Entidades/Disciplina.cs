@@ -21,6 +21,7 @@ namespace LogicaDeNegocio.Entidades
         {
             Nombre = new Nombre(disciplina.Nombre.Disciplina);
             AnioDeIntegracion = disciplina.AnioDeIntegracion;
+            Atletas = disciplina.Atletas;
         }
     }
 }

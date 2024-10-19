@@ -7,19 +7,25 @@
 <center>
     <form method="post" asp-action="CrearEvento3">
         <h1>Crear nuevo evento</h1>
-        <label>Seleccione el Atleta</label>
-        <select name="idAtleta">
-            @foreach (var atleta in Model.atletas)
-            {
-                <option value="@atleta.Id">@atleta.ToString()</option>
-            }
-        </select><br /><br />
+        <label>Seleccione el Atleta</label><br /><br />
+        @foreach (var atleta in Model.atletas)
+        {
+            <label>
+                <input type="checkbox" name="AtletasSeleccionados" value="@atleta.Id" />
+                @atleta.Nombre @atleta.Apellido (@atleta.Pais)
+           </label>
+           <br /><br />
+        }<br />
         <label>Fecha de inicio:</label>
         <input type="date" name="fechaInicio" /><br /><br />
-        <label>Fecha de inicio:</label>
+        <label>Fecha de finalización:</label>
         <input type="date" name="fechaFinal" /><br /><br />
         <a class="btn btn-secondary" asp-action="CrearEvento">Volver</a>
         <input class="btn btn-success" type="submit" value="Crear Evento"/>
     </form>
     <p>@TempData["nombreEventoRepetido"]</p>
+    @if (ViewBag.ErrorMensaje != null)
+    {
+        <p>@ViewBag.ErrorMensaje</p>
+    }
 </center>

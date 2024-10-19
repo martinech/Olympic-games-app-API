@@ -27,7 +27,7 @@ namespace AccesoADatos
 
         public Evento GetEventoPorId(int id)
         {
-            return _contexto.Set<Evento>().FirstOrDefault(e => e.Id == id);
+            return _contexto.Set<Evento>().Include(e => e.EventoAtletas).FirstOrDefault(e => e.Id == id);
             //return _contexto.Set<Evento>().Include(e => e.Atletas).FirstOrDefault(e => e.Id == id);
         }
 
