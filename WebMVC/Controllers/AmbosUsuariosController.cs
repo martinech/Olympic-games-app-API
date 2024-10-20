@@ -20,6 +20,7 @@ namespace WebMVC.Controllers
         private readonly IGetAtletasPorDisciplina _getAtletasPorDisciplina;
         private readonly IGetDisciplinaPorId _getDisciplinaPorId;
         private readonly ICrearEvento _crearEvento;
+        private readonly IAsignarAtletaAEvento _asignarAtletaAEvento;
 
         public AmbosUsuariosController( ILogger<AmbosUsuariosController> logger, 
                                         ILoginUsuario loginUsuario,
@@ -27,7 +28,8 @@ namespace WebMVC.Controllers
                                         IGetDisciplinas getDisciplinas,
                                         IGetAtletasPorDisciplina getAtletasPorDisciplina,
                                         IGetDisciplinaPorId getDisciplinaPorId,
-                                        ICrearEvento crearEvento)
+                                        ICrearEvento crearEvento,
+                                        IAsignarAtletaAEvento asignarAtletaAEvento)
 
         {
             _logger = logger;
@@ -37,6 +39,7 @@ namespace WebMVC.Controllers
             _getAtletasPorDisciplina = getAtletasPorDisciplina;
             _getDisciplinaPorId = getDisciplinaPorId;
             _crearEvento = crearEvento;
+            _asignarAtletaAEvento = asignarAtletaAEvento;
         }
 
         [HttpGet]
@@ -119,7 +122,7 @@ namespace WebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CrearEvento3(DateTime fechaInicio, DateTime fechaFinal)
+        public IActionResult CrearEvento3(List<int> AtletasSeleccionados, DateTime fechaInicio, DateTime fechaFinal)
         {
             if (fechaInicio == DateTime.MinValue || fechaFinal==DateTime.MinValue)
             {
@@ -147,7 +150,20 @@ namespace WebMVC.Controllers
                     FechaInicio = fechaInicio,
                     FechaFin = fechaFinal
                 };
-                _crearEvento.Ejecutar(eventoDto);
+                int eventoId = _crearEvento.Ejecutar(eventoDto);
+                foreach (var atletaId in AtletasSeleccionados)
+                {
+                    var eventoAtletaDto = new EventoAtletaDto
+                    {
+                        idAtleta = atletaId,
+                        idEvento = eventoId,  // Aquí necesitas el ID del evento recién creado
+                        puntaje = 0  // Inicialmente, el puntaje es 0, puedes ajustarlo según tu lógica de negocio
+                    };
+
+                    // Agregar la asociación a la base de datos
+                    _asignarAtletaAEvento.Ejecutar(eventoAtletaDto);
+                    return RedirectToAction("Puntajes");
+                }
             }
             catch(Exception e)
             {

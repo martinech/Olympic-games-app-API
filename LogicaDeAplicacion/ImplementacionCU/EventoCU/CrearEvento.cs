@@ -14,17 +14,19 @@ namespace LogicaDeAplicacion.ImplementacionCU.EventoCU
         {
             _repositorioEvento = repositorio;
         }
-        public void Ejecutar(EventoDto eventoDto)
+        public int Ejecutar(EventoDto eventoDto)
         {
             IEnumerable<Evento> eventosExistentes = _repositorioEvento.GetEventos();
             if (eventosExistentes.Any(e => e.Nombre.Equals(eventoDto.Nombre)))
             {
                 throw new DatoInvalidoException("Ya existe un evento con ese nombre.");
+            } else
+            {
+                Evento eventoNuevo = eventoDto.ToEvento();
+                eventoNuevo.Validar();
+                _repositorioEvento.Crear(eventoNuevo);
             }
-
-            Evento eventoNuevo = eventoDto.ToEvento();
-            eventoNuevo.Validar();
-            _repositorioEvento.Crear(eventoNuevo);
+            return eventoDto.Id;
         }
     }
-}
+}   

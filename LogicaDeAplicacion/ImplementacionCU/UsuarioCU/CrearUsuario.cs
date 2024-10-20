@@ -1,8 +1,8 @@
 ﻿using Dto;
-using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeNegocio.Entidades;
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
+using LogicaDeNegocio.Entidades;
 using LogicaDeNegocio.Exceptions;
+using LogicaDeNegocio.InterfacesRepositorios;
 
 namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
 {
@@ -21,9 +21,12 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
             {
                 throw new DatoInvalidoException("Ya existe un usuario con ese nombre.");
             }
-            Usuario usuarioNuevo = usuarioDto.ToUsuario();
+            else
+            {
+                Usuario usuarioNuevo = usuarioDto.ToUsuario();
                 usuarioNuevo.Validar();
                 _repositorioUsuario.Crear(usuarioNuevo);
             }
         }
     }
+}
