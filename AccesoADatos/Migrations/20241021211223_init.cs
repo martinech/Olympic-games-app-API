@@ -120,7 +120,7 @@ namespace AccesoADatos.Migrations
                 {
                     idEvento = table.Column<int>(type: "int", nullable: false),
                     idAtleta = table.Column<int>(type: "int", nullable: false),
-                    puntaje = table.Column<int>(type: "int", nullable: false)
+                    Puntaje = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -146,6 +146,7 @@ namespace WebMVC.Controllers
             try
             {
                 _crearDisciplina.Ejecutar(nuevaDisciplina);
+                return RedirectToAction("GestionDeDisciplinas");
             }
             catch (UsuarioInvalidoException e)
             {
@@ -157,7 +158,6 @@ namespace WebMVC.Controllers
                 ViewBag.mensage = e.Message;
                 return View();
             }
-            return RedirectToAction("GestionDeDisciplinas");
         }
 
         [HttpGet]

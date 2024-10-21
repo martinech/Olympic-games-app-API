@@ -65,8 +65,6 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(IAsignarPuntaje), typeof(AsignarPuntaje));
 
 
-
-
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
