@@ -10,5 +10,6 @@ namespace LogicaDeNegocio.InterfacesRepositorios
         void Modificar(int id, Evento evento);
         void Eliminar(int id);
         IEnumerable<Evento> GetEventosPorFecha(DateTime fechaFin);
+        void ModificarEventoAtleta(int idEvento, int idAtleta, EventoAtleta eventoAtleta);
     }
 }

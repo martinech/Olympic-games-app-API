@@ -1,5 +1,4 @@
 ﻿using LogicaDeNegocio.Exceptions;
-
 namespace LogicaDeNegocio.Entidades
 {
     public class Evento

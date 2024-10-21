@@ -5,41 +5,41 @@ namespace Dto
     public class EventoAtletaDto
     {
         public int idEvento;
-        public EventoDto evento { get; set; }
+        public Evento Evento { get; set; }
 
         public int idAtleta;
-        public AtletaDto atleta { get; set; }
-        public int puntaje { get; set; }
+        public Atleta Atleta { get; set; }
+        public int Puntaje { get; set; }
 
         public EventoAtletaDto() { }
 
         public EventoAtletaDto(EventoAtleta eventoAtleta)
         {
             idEvento = eventoAtleta.idEvento;
-            evento = eventoAtleta.evento;
+            Evento = eventoAtleta.Evento;
             idAtleta = eventoAtleta.idAtleta;
-            atleta = eventoAtleta.atleta;
-            puntaje = eventoAtleta.puntaje;
+            Atleta = eventoAtleta.Atleta;
+            Puntaje = eventoAtleta.Puntaje;
         }
 
-        public Evento ToEvento()
-        {
-            Evento evento = new Evento()
-            {
-                Nombre = evento.Nombre,
-                Disciplina.Nombre = evento.Disciplina
-            }
-        }
+        //public Evento ToEvento()
+        //{
+        //    Evento evento = new Evento()
+        //    {
+        //        Nombre = evento.Nombre,
+        //        Disciplina.Nombre = evento.Disciplina
+        //    }
+        //}
 
         public EventoAtleta ToEventoAtleta()
         {
             EventoAtleta eventoAtleta = new EventoAtleta()
             {
                 idEvento = idEvento,
-                evento = evento,
+                Evento = Evento,
                 idAtleta = idAtleta,
-                atleta = atleta,
-                puntaje = puntaje
+                Atleta = Atleta,
+                Puntaje = Puntaje
             };
             return eventoAtleta;
         }

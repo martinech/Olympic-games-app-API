@@ -1,5 +1,5 @@
 ﻿@model EventoAtletaViewModel
-<h1>Atletas</h1>
+<h1>Atletas del evento</h1>
 
 
 <table class="table table-stripped mt-3">
@@ -14,9 +14,9 @@
         @foreach (var atletaEnElEvento in Model.atletaEnElEvento)
         {
             <tr>
-                <td>@atletaEnElEvento.atleta.Nombre</td>
-                <td>@atletaEnElEvento.puntaje</td>
-                <td></td>
+                <td>@atletaEnElEvento.Atleta.Nombre</td>
+                <td>@atletaEnElEvento.Puntaje</td>
+                <td><a asp-action="AsignarPuntaje" asp-route-idAtleta="@atletaEnElEvento.idAtleta" asp-route-idEvento="@ViewBag.idEvento" class="btn btn-success">Agregar puntaje</a></td>
             </tr>
         }
     </tbody>

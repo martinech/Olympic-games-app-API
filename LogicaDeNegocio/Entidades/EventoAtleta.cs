@@ -9,11 +9,20 @@ namespace LogicaDeNegocio.Entidades
     public class EventoAtleta
     {
         public int idEvento;
-        public Evento evento { get; set; }
+        public Evento Evento { get; set; }
 
         public int idAtleta;
-        public Atleta atleta { get; set; }
+        public Atleta Atleta { get; set; }
 
-        public int puntaje { get; set; }
+        public int Puntaje { get; set; }
+
+        public void Copiar(EventoAtleta eventoAtleta)
+        {
+            idEvento = eventoAtleta.idEvento;
+            Evento = eventoAtleta.Evento;
+            idAtleta = eventoAtleta.idAtleta;
+            Atleta = eventoAtleta.Atleta;
+            Puntaje = eventoAtleta.Puntaje;
+        }
     }
 }

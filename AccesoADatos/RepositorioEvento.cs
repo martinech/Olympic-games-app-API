@@ -28,7 +28,7 @@ namespace AccesoADatos
 
         public Evento GetEventoPorId(int id)
         {
-            return _contexto.Set<Evento>().Include(e => e.EventoAtletas).FirstOrDefault(e => e.Id == id);
+            return _contexto.Set<Evento>().Include(e => e.EventoAtletas).ThenInclude(ea => ea.Atleta).FirstOrDefault(e => e.Id == id);
         }
 
         public IEnumerable<Evento> GetEventos()
@@ -56,9 +56,12 @@ namespace AccesoADatos
             return _contexto.Set<Evento>().Where(evento => evento.FechaFin ==  fechaevento);
         }
 
-        public void AsignarAtletaAEvento(EventoAtleta eventoAtleta)
+        public void ModificarEventoAtleta(int idEvento, int idAtleta, EventoAtleta eventoAtleta)
         {
-            _contexto.Set<EventoAtleta>().Add(eventoAtleta);
+            EventoAtleta eventoAtletaAModificar = _contexto.Set<EventoAtleta>()
+                .FirstOrDefault(e => e.idEvento == idEvento && e.idAtleta == idAtleta);
+            eventoAtletaAModificar.Copiar(eventoAtleta);
+            _contexto.Entry(eventoAtletaAModificar).State = EntityState.Modified;
             _contexto.SaveChanges();
         }
     }

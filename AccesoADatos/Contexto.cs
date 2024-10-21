@@ -26,12 +26,12 @@ namespace AccesoADatos
             modelBuilder.Entity<EventoAtleta>(eventoatleta => eventoatleta.HasKey(ea => new {ea.idEvento, ea.idAtleta}));
 
             modelBuilder.Entity<EventoAtleta>()
-                .HasOne(ea => ea.evento)
+                .HasOne(ea => ea.Evento)
                 .WithMany(evento => evento.EventoAtletas)
                 .HasForeignKey(ea => ea.idEvento);
 
             modelBuilder.Entity<EventoAtleta>()
-                .HasOne(ea => ea.atleta)
+                .HasOne(ea => ea.Atleta)
                 .WithMany(atleta => atleta.EventoAtletas)
                 .HasForeignKey(ea => ea.idAtleta);
 

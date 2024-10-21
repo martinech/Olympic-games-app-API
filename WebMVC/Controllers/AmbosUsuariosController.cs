@@ -24,8 +24,9 @@ namespace WebMVC.Controllers
         private readonly IGetEventosPorFecha _getEventosPorFecha;
         private readonly IGetEventoAtletaPorIdEvento _getEventoAtletaPorIdEvento;
         private readonly IGetAtletaPorId _getAtletaPorId;
+        private readonly IGetEventoPorId _getEventoPorId;
 
-        public AmbosUsuariosController( ILogger<AmbosUsuariosController> logger, 
+        public AmbosUsuariosController(ILogger<AmbosUsuariosController> logger,
                                         ILoginUsuario loginUsuario,
                                         IGetEventos getEventos,
                                         IGetDisciplinas getDisciplinas,
@@ -35,7 +36,8 @@ namespace WebMVC.Controllers
                                         IAsignarAtletaAEvento asignarAtletaAEvento,
                                         IGetEventosPorFecha getEventosPorFecha,
                                         IGetEventoAtletaPorIdEvento getEventoAtletaPorIdEvento,
-                                        IGetAtletaPorId getAtletaPorId) 
+                                        IGetAtletaPorId getAtletaPorId,
+                                        IGetEventoPorId getEventoPorId)
         {
             _logger = logger;
             _loginUsuario = loginUsuario;
@@ -48,6 +50,7 @@ namespace WebMVC.Controllers
             _getEventosPorFecha = getEventosPorFecha;
             _getEventoAtletaPorIdEvento = getEventoAtletaPorIdEvento;
             _getAtletaPorId = getAtletaPorId;
+            _getEventoPorId = getEventoPorId;
         }
 
         [HttpGet]
@@ -132,7 +135,7 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult CrearEvento3(List<int> AtletasSeleccionados, DateTime fechaInicio, DateTime fechaFinal)
         {
-            if (fechaInicio == DateTime.MinValue || fechaFinal==DateTime.MinValue)
+            if (fechaInicio == DateTime.MinValue || fechaFinal == DateTime.MinValue)
             {
                 ViewBag.ErrorMensaje = "Debe ingresar una fecha de inicio y finalización válida.";
                 CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
@@ -143,7 +146,7 @@ namespace WebMVC.Controllers
                 TempData.Keep("idDisciplina");
 
                 return View("CrearEvento2", crearEventoVM);
-            }else if (AtletasSeleccionados.Count < 3){
+            } else if (AtletasSeleccionados.Count < 3) {
                 ViewBag.ErrorMensaje = "Debe ingresar al menos 3 atletas";
                 CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
                 string NombreEvento = TempData["nombreEvento"]?.ToString();
@@ -176,7 +179,7 @@ namespace WebMVC.Controllers
                         {
                             idAtleta = atletaId,
                             idEvento = eventoId,
-                            puntaje = 0
+                            Puntaje = 0
                         };
                         _asignarAtletaAEvento.Ejecutar(eventoAtletaDto);
                     }
@@ -191,7 +194,7 @@ namespace WebMVC.Controllers
                 }
             }
         }
-        [HttpGet, HttpPost] 
+        [HttpGet, HttpPost]
         public IActionResult GetEventosPorFecha(DateTime fechaEvento)
         {
             BuscarEventosPorFechaViewModel buscarEventosVM = new BuscarEventosPorFechaViewModel();
@@ -202,11 +205,66 @@ namespace WebMVC.Controllers
         [HttpGet]
         public IActionResult GetAtletasEvento(int id)
         {
-            List<EventoAtletaDto> eventoAtletas = _getEventoAtletaPorIdEvento.Ejecutar(id);
-            foreach (EventoAtletaDto eventoAtleta in eventoAtletas)
-                eventoAtleta.atleta = _getAtletaPorId.Ejecutar(eventoAtleta.idAtleta);
+            EventoAtletaViewModel eventoAtletaVM = new EventoAtletaViewModel();
+            eventoAtletaVM.atletaEnElEvento = _getEventoAtletaPorIdEvento.Ejecutar(id);
+            ViewBag.idEvento = id;
+            return View(eventoAtletaVM);
+        }
 
-            return View(atletasDelEventoVM);
+        [HttpGet]
+        public IActionResult AsignarPuntaje(int idAtleta, int idEvento)
+        {
+            if (HttpContext.Session.GetString("rolLogueado") == "admin" || HttpContext.Session.GetString("rolLogueado") == "digit")
+            {
+                try
+                {
+                    ViewBag.idEvento = idEvento;
+                    ViewBag.idAtleta = idAtleta;
+
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorMensaje = "Ocurrió un error al cargar los datos.";
+                    return RedirectToAction("GestionDeEventos");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AsignarPuntaje(int idAtleta, int idEvento, int Puntaje)
+        {
+            if (HttpContext.Session.GetString("rolLogueado") == "admin" || HttpContext.Session.GetString("rolLogueado") == "digit")
+            {
+                try
+                {
+                    // Crear el objeto EventoAtletaDto con los datos necesarios
+                    EventoAtletaDto eventoAtleta = new EventoAtletaDto
+                    {
+                        idEvento = idEvento,
+                        idAtleta = idAtleta,
+                        Puntaje = Puntaje
+                    };
+
+                    // Ejecutar la lógica para asignar el puntaje
+                    _asignarAtletaAEvento.Ejecutar(eventoAtleta);
+
+                    return RedirectToAction("GetAtletasEvento", new { id = idEvento });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorMensaje = "Ocurrió un error al asignar el puntaje.";
+                    return RedirectToAction("GestionDeEventos");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
         }
 
 

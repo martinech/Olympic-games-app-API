@@ -1,0 +1,24 @@
+﻿@model AsignarPuntajeViewModel
+
+@{
+    ViewData["Title"] = "Asignar puntaje";
+}
+
+<center>
+    <h1>Asignar puntaje</h1>
+    <br /><br />
+    <form method="post" asp-action="AsignarPuntaje" id="formularioPuntaje">
+        <h4>Puntaje</h4><br /><br />
+        <input type="number" name="Puntaje"/>
+        <br /><br />
+        <input class="btn btn-success" type="submit" value="Guardar" id="botonAsignarPuntaje" />
+    </form>
+    <p id="parrafoEvento"></p>
+    @if (ViewBag.ErrorMensaje != null)
+    {
+        <p>@ViewBag.ErrorMensaje</p>
+    }
+</center>
+
+
+<script type="text/javascript" src="~/js/validacionesEventos/crearEvento.js"></script>

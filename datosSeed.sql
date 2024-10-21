@@ -8,8 +8,9 @@ VALUES
 -- Insertar datos en la tabla Atletas
 INSERT INTO Atletas (Nombre, Apellido, Pais, Sexo)
 VALUES 
-('John', 'Doe', 'USA', 'M'),
-('Jane', 'Smith', 'UK', 'F');
+--('John', 'Doe', 'USA', 'M'),
+--('Jane', 'Smith', 'UK', 'F'),
+('Juan', 'Perez', 'UY', 'M');
 
 -- Insertar datos en la tabla Disciplinas
 INSERT INTO Disciplinas (Nombre_Disciplina, AnioDeIntegracion)
@@ -29,3 +30,8 @@ INSERT INTO Paises (Nombre, Delegado, TelDelegado, CantHabitantes)
 VALUES
 ('Estados Unidos', 'John Delegado', '123-456-7890', 331000000),
 ('Reino Unido', 'Jane Delegada', '987-654-3210', 67000000);
+
+
+use Obligatorio
+drop table eventos
+drop table EventoAtleta
