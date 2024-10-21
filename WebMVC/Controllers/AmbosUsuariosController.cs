@@ -25,6 +25,7 @@ namespace WebMVC.Controllers
         private readonly IGetEventoAtletaPorIdEvento _getEventoAtletaPorIdEvento;
         private readonly IGetAtletaPorId _getAtletaPorId;
         private readonly IGetEventoPorId _getEventoPorId;
+        private readonly IAsignarPuntaje _asignarPuntaje;
 
         public AmbosUsuariosController(ILogger<AmbosUsuariosController> logger,
                                         ILoginUsuario loginUsuario,
@@ -37,7 +38,8 @@ namespace WebMVC.Controllers
                                         IGetEventosPorFecha getEventosPorFecha,
                                         IGetEventoAtletaPorIdEvento getEventoAtletaPorIdEvento,
                                         IGetAtletaPorId getAtletaPorId,
-                                        IGetEventoPorId getEventoPorId)
+                                        IGetEventoPorId getEventoPorId,
+                                        IAsignarPuntaje asignarPuntaje)
         {
             _logger = logger;
             _loginUsuario = loginUsuario;
@@ -51,6 +53,7 @@ namespace WebMVC.Controllers
             _getEventoAtletaPorIdEvento = getEventoAtletaPorIdEvento;
             _getAtletaPorId = getAtletaPorId;
             _getEventoPorId = getEventoPorId;
+            _asignarPuntaje = asignarPuntaje;
         }
 
         [HttpGet]
@@ -245,13 +248,13 @@ namespace WebMVC.Controllers
                     // Crear el objeto EventoAtletaDto con los datos necesarios
                     EventoAtletaDto eventoAtleta = new EventoAtletaDto
                     {
-                        idEvento = idEvento,
                         idAtleta = idAtleta,
+                        idEvento = idEvento,
                         Puntaje = Puntaje
                     };
 
                     // Ejecutar la lógica para asignar el puntaje
-                    _asignarAtletaAEvento.Ejecutar(eventoAtleta);
+                    _asignarPuntaje.Ejecutar(idEvento, idAtleta, eventoAtleta);
 
                     return RedirectToAction("GetAtletasEvento", new { id = idEvento });
                 }

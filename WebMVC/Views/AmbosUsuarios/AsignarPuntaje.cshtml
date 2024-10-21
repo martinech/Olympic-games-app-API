@@ -8,6 +8,8 @@
     <h1>Asignar puntaje</h1>
     <br /><br />
     <form method="post" asp-action="AsignarPuntaje" id="formularioPuntaje">
+        <input type="hidden" name="idAtleta" value="@ViewBag.idAtleta" />
+        <input type="hidden" name="idEvento" value="@ViewBag.idEvento" />
         <h4>Puntaje</h4><br /><br />
         <input type="number" name="Puntaje"/>
         <br /><br />

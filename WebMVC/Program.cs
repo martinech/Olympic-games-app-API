@@ -62,6 +62,7 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(IAsignarAtletaAEvento), typeof(AsignarAtletaAEvento));
             builder.Services.AddScoped(typeof(IGetEventosPorFecha), typeof(GetEventosPorFecha));
             builder.Services.AddScoped(typeof(IGetEventoAtletaPorIdEvento), typeof(GetEventoAtletaPorIdEvento));
+            builder.Services.AddScoped(typeof(IAsignarPuntaje), typeof(AsignarPuntaje));
 
 
 

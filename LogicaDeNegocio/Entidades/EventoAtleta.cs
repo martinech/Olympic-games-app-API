@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicaDeNegocio.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,12 @@ namespace LogicaDeNegocio.Entidades
         public Atleta Atleta { get; set; }
 
         public int Puntaje { get; set; }
+
+        public void Validar()
+        {
+            if (Puntaje < 0)
+                throw new DatoInvalidoException("El puntaje no puede ser menor que 0");
+        }
 
         public void Copiar(EventoAtleta eventoAtleta)
         {
