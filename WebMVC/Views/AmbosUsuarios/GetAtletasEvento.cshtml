@@ -1,0 +1,27 @@
+﻿@model EventoAtletaViewModel
+<h1>Atletas</h1>
+
+
+<table class="table table-stripped mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Puntaje</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var atletaEnElEvento in Model.atletaEnElEvento)
+        {
+            <tr>
+                <td>@atletaEnElEvento.atleta.Nombre</td>
+                <td>@atletaEnElEvento.puntaje</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-controller="AmbosUsuarios" asp-action="Logout" method="post">
+    <input type="submit" value="Cerrar Sesion" class="btn btn-danger" />
+</form>

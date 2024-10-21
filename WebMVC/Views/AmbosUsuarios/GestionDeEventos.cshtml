@@ -15,6 +15,14 @@
 }
 <a  asp-controller="AmbosUsuarios" asp-action="CrearEvento" class="btn btn-success" style="float: right">Crear Evento</a>
 
+<form method="post" asp-action="GetEventosPorFecha">
+    <h5>Buscar evento por fechas</h5>
+    <label>Fecha Evento</label>
+    <input type="date" name="fechaEvento"/><br />
+    <input class="btn btn-primary" type="submit" value="Buscar"/>
+</form>
+
+
 <table class="table table-stripped mt-3">
     <thead>
         <tr>
@@ -31,14 +39,8 @@
             <tr>
                 <td>@evento.Nombre</td>
                 <td>@evento.Disciplina</td>
-                <td>@evento.FechaInicio.ToString("dd-MM-yyyy")</td>
-                <td>@evento.FechaFin.ToString("dd-MM-yyyy")</td>
-                <td>
-                    <a asp-action="ModificarEvento" asp-route-id="@evento.Id" class="btn btn-success">Editar</a>
-                </td>
-                <td>
-                    <a asp-action="EliminarEvento" asp-route-id="@evento.Id" class="btn btn-danger">Eliminar</a>
-                </td>
+                <td>@evento.FechaInicio.ToString("MM-dd-yyyy")</td>
+                <td>@evento.FechaFin.ToString("MM-dd-yyyy")</td>
             </tr>
         }
     </tbody>

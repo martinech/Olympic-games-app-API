@@ -5,10 +5,10 @@ namespace Dto
     public class EventoAtletaDto
     {
         public int idEvento;
-        public Evento evento { get; set; }
+        public EventoDto evento { get; set; }
 
         public int idAtleta;
-        public Atleta atleta { get; set; }
+        public AtletaDto atleta { get; set; }
         public int puntaje { get; set; }
 
         public EventoAtletaDto() { }
@@ -22,6 +22,14 @@ namespace Dto
             puntaje = eventoAtleta.puntaje;
         }
 
+        public Evento ToEvento()
+        {
+            Evento evento = new Evento()
+            {
+                Nombre = evento.Nombre,
+                Disciplina.Nombre = evento.Disciplina
+            }
+        }
 
         public EventoAtleta ToEventoAtleta()
         {

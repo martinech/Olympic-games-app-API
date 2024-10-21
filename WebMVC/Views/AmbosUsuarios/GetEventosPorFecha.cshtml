@@ -1,0 +1,34 @@
+﻿@model BuscarEventosPorFechaViewModel
+<h1>Buscar Eventos</h1>
+
+<a asp-action="CrearUsuario" class="btn btn-success" style="float: right">Crear Usuario</a>
+
+<table class="table table-stripped mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Disciplina</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evento in Model.Eventos)
+        {
+            <tr>
+                <td>@evento.Nombre</td>
+                <td>@evento.Disciplina</td>
+                <td>@evento.FechaFin</td>
+                <td>@evento.FechaInicio</td>
+                <td>
+                    <a asp-action="GetAtletasEvento" asp-route-id="@evento.Id" class="btn btn-success">Ver Atletas</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-controller="AmbosUsuarios" asp-action="Logout" method="post">
+    <input type="submit" value="Cerrar Sesion" class="btn btn-danger" />
+</form>

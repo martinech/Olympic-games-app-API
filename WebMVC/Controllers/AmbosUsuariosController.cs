@@ -21,6 +21,9 @@ namespace WebMVC.Controllers
         private readonly IGetDisciplinaPorId _getDisciplinaPorId;
         private readonly ICrearEvento _crearEvento;
         private readonly IAsignarAtletaAEvento _asignarAtletaAEvento;
+        private readonly IGetEventosPorFecha _getEventosPorFecha;
+        private readonly IGetEventoAtletaPorIdEvento _getEventoAtletaPorIdEvento;
+        private readonly IGetAtletaPorId _getAtletaPorId;
 
         public AmbosUsuariosController( ILogger<AmbosUsuariosController> logger, 
                                         ILoginUsuario loginUsuario,
@@ -29,8 +32,10 @@ namespace WebMVC.Controllers
                                         IGetAtletasPorDisciplina getAtletasPorDisciplina,
                                         IGetDisciplinaPorId getDisciplinaPorId,
                                         ICrearEvento crearEvento,
-                                        IAsignarAtletaAEvento asignarAtletaAEvento)
-
+                                        IAsignarAtletaAEvento asignarAtletaAEvento,
+                                        IGetEventosPorFecha getEventosPorFecha,
+                                        IGetEventoAtletaPorIdEvento getEventoAtletaPorIdEvento,
+                                        IGetAtletaPorId getAtletaPorId) 
         {
             _logger = logger;
             _loginUsuario = loginUsuario;
@@ -40,6 +45,9 @@ namespace WebMVC.Controllers
             _getDisciplinaPorId = getDisciplinaPorId;
             _crearEvento = crearEvento;
             _asignarAtletaAEvento = asignarAtletaAEvento;
+            _getEventosPorFecha = getEventosPorFecha;
+            _getEventoAtletaPorIdEvento = getEventoAtletaPorIdEvento;
+            _getAtletaPorId = getAtletaPorId;
         }
 
         [HttpGet]
@@ -135,45 +143,72 @@ namespace WebMVC.Controllers
                 TempData.Keep("idDisciplina");
 
                 return View("CrearEvento2", crearEventoVM);
-            }
-            try 
-            {
+            }else if (AtletasSeleccionados.Count < 3){
+                ViewBag.ErrorMensaje = "Debe ingresar al menos 3 atletas";
+                CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
                 string NombreEvento = TempData["nombreEvento"]?.ToString();
                 int idDisciplina = (int)TempData["idDisciplina"];
-                CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
                 crearEventoVM.atletas = _getAtletasPorDisciplina.Ejecutar(idDisciplina);
-                DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(idDisciplina);
-                EventoDto eventoDto = new EventoDto()
+                TempData.Keep("nombreEvento");
+                TempData.Keep("idDisciplina");
+                return View("CrearEvento2", crearEventoVM);
+            }
+            else
+            {
+                try
                 {
-                    Nombre = (string)TempData["nombreEvento"],
-                    Disciplina = disciplinaDto.Nombre,
-                    FechaInicio = fechaInicio,
-                    FechaFin = fechaFinal
-                };
-                int eventoId = _crearEvento.Ejecutar(eventoDto);
-                foreach (var atletaId in AtletasSeleccionados)
-                {
-                    var eventoAtletaDto = new EventoAtletaDto
+                    string NombreEvento = TempData["nombreEvento"]?.ToString();
+                    int idDisciplina = (int)TempData["idDisciplina"];
+                    CrearEventoViewModel crearEventoVM = new CrearEventoViewModel();
+                    crearEventoVM.atletas = _getAtletasPorDisciplina.Ejecutar(idDisciplina);
+                    DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(idDisciplina);
+                    EventoDto eventoDto = new EventoDto()
                     {
-                        idAtleta = atletaId,
-                        idEvento = eventoId,  // Aquí necesitas el ID del evento recién creado
-                        puntaje = 0  // Inicialmente, el puntaje es 0, puedes ajustarlo según tu lógica de negocio
+                        Nombre = (string)TempData["nombreEvento"],
+                        Disciplina = disciplinaDto.Nombre,
+                        FechaInicio = fechaInicio,
+                        FechaFin = fechaFinal
                     };
+                    int eventoId = _crearEvento.Ejecutar(eventoDto);
+                    foreach (var atletaId in AtletasSeleccionados)
+                    {
+                        var eventoAtletaDto = new EventoAtletaDto
+                        {
+                            idAtleta = atletaId,
+                            idEvento = eventoId,
+                            puntaje = 0
+                        };
+                        _asignarAtletaAEvento.Ejecutar(eventoAtletaDto);
+                    }
 
-                    // Agregar la asociación a la base de datos
-                    _asignarAtletaAEvento.Ejecutar(eventoAtletaDto);
-                    return RedirectToAction("Puntajes");
+                    return RedirectToAction("GestionDeEventos");
+                }
+                catch (Exception e)
+                {
+                    TempData["nombreEventoRepetido"] = e.Message;
+                    return RedirectToAction("CrearEvento");
+
                 }
             }
-            catch(Exception e)
-            {
-                TempData["nombreEventoRepetido"] = e.Message;
-                return RedirectToAction("CrearEvento");
-
-            }
-            return RedirectToAction("GestionDeEventos");
         }
-        
+        [HttpGet, HttpPost] 
+        public IActionResult GetEventosPorFecha(DateTime fechaEvento)
+        {
+            BuscarEventosPorFechaViewModel buscarEventosVM = new BuscarEventosPorFechaViewModel();
+            buscarEventosVM.Eventos = _getEventosPorFecha.Ejecutar(fechaEvento);
+            return View(buscarEventosVM);
+        }
+
+        [HttpGet]
+        public IActionResult GetAtletasEvento(int id)
+        {
+            List<EventoAtletaDto> eventoAtletas = _getEventoAtletaPorIdEvento.Ejecutar(id);
+            foreach (EventoAtletaDto eventoAtleta in eventoAtletas)
+                eventoAtleta.atleta = _getAtletaPorId.Ejecutar(eventoAtleta.idAtleta);
+
+            return View(atletasDelEventoVM);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

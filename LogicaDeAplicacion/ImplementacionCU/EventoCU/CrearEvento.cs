@@ -24,9 +24,9 @@ namespace LogicaDeAplicacion.ImplementacionCU.EventoCU
             {
                 Evento eventoNuevo = eventoDto.ToEvento();
                 eventoNuevo.Validar();
-                _repositorioEvento.Crear(eventoNuevo);
+                int eventoId = _repositorioEvento.Crear(eventoNuevo);
+                return eventoId;
             }
-            return eventoDto.Id;
         }
     }
 }   

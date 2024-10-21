@@ -14,7 +14,7 @@ namespace AccesoADatos
             _contexto = contexto;
         }
 
-        public void Crear(Evento evento)
+        public int Crear(Evento evento)
         {
             if (_contexto.Set<Evento>().Any(e => e.Nombre == evento.Nombre))
                 throw new DatoInvalidoException();
@@ -22,6 +22,7 @@ namespace AccesoADatos
             {
                 _contexto.Set<Evento>().Add(evento);
                 _contexto.SaveChanges();
+                return evento.Id;
             }
         }
 
@@ -48,6 +49,11 @@ namespace AccesoADatos
             Evento eventoAEliminar = _contexto.Set<Evento>().FirstOrDefault(t => t.Id == id);
             _contexto.Set<Evento>().Remove(eventoAEliminar);
             _contexto.SaveChanges();
+        }
+
+        public IEnumerable<Evento> GetEventosPorFecha(DateTime fechaevento)
+        {
+            return _contexto.Set<Evento>().Where(evento => evento.FechaFin ==  fechaevento);
         }
 
         public void AsignarAtletaAEvento(EventoAtleta eventoAtleta)
