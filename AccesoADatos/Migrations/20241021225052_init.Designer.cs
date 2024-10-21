@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoADatos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20241020192456_init")]
+    [Migration("20241021225052_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -120,7 +120,7 @@ namespace AccesoADatos.Migrations
                     b.Property<int>("idAtleta")
                         .HasColumnType("int");
 
-                    b.Property<int>("puntaje")
+                    b.Property<int>("Puntaje")
                         .HasColumnType("int");
 
                     b.HasKey("idEvento", "idAtleta");
@@ -230,21 +230,21 @@ namespace AccesoADatos.Migrations
 
             modelBuilder.Entity("LogicaDeNegocio.Entidades.EventoAtleta", b =>
                 {
-                    b.HasOne("LogicaDeNegocio.Entidades.Atleta", "atleta")
+                    b.HasOne("LogicaDeNegocio.Entidades.Atleta", "Atleta")
                         .WithMany("EventoAtletas")
                         .HasForeignKey("idAtleta")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LogicaDeNegocio.Entidades.Evento", "evento")
+                    b.HasOne("LogicaDeNegocio.Entidades.Evento", "Evento")
                         .WithMany("EventoAtletas")
                         .HasForeignKey("idEvento")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("atleta");
+                    b.Navigation("Atleta");
 
-                    b.Navigation("evento");
+                    b.Navigation("Evento");
                 });
 
             modelBuilder.Entity("LogicaDeNegocio.Entidades.Atleta", b =>

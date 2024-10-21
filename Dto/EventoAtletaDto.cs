@@ -22,15 +22,6 @@ namespace Dto
             Puntaje = eventoAtleta.Puntaje;
         }
 
-        //public Evento ToEvento()
-        //{
-        //    Evento evento = new Evento()
-        //    {
-        //        Nombre = evento.Nombre,
-        //        Disciplina.Nombre = evento.Disciplina
-        //    }
-        //}
-
         public EventoAtleta ToEventoAtleta()
         {
             EventoAtleta eventoAtleta = new EventoAtleta()

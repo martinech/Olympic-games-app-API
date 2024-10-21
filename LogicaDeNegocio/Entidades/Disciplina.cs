@@ -15,6 +15,10 @@ namespace LogicaDeNegocio.Entidades
         {
             if (string.IsNullOrEmpty(Nombre.Disciplina))
                 throw new DatoInvalidoException("El nombre no puede ser vacio");
+            if(Nombre.Disciplina.Length > 50)
+            {
+                throw new DatoInvalidoException("El nombre no puede tener mas de 50 caracteres");
+            }
         }
 
         public void Copiar(Disciplina disciplina)
