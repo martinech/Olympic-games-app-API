@@ -11,11 +11,11 @@
         <input type="hidden" name="idAtleta" value="@ViewBag.idAtleta" />
         <input type="hidden" name="idEvento" value="@ViewBag.idEvento" />
         <h4>Puntaje</h4><br /><br />
-        <input type="number" name="Puntaje"/>
+        <input type="number" name="Puntaje" id="puntaje" />
         <br /><br />
         <input class="btn btn-success" type="submit" value="Guardar" id="botonAsignarPuntaje" />
     </form>
-    <p id="parrafoEvento"></p>
+    <p id="parrafoPuntaje"></p>
     @if (ViewBag.ErrorMensaje != null)
     {
         <p>@ViewBag.ErrorMensaje</p>
