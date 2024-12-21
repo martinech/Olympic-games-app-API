@@ -71,6 +71,7 @@ namespace WebMVC.Controllers
                 HttpContext.Session.SetInt32("idLogueado", usuarioLogueado.Id);
                 HttpContext.Session.SetString("emailLogueado", usuarioLogueado.Email);
                 HttpContext.Session.SetString("rolLogueado", usuarioLogueado.Rol);
+                HttpContext.Session.SetString("token", usuarioLogueado.token);
 
                 if (HttpContext.Session.GetString("rolLogueado") == "admin")
                     return RedirectToAction("GestionDeUsuarios", "UsuarioAdmin");
@@ -245,7 +246,6 @@ namespace WebMVC.Controllers
             {
                 try
                 {
-                    // Crear el objeto EventoAtletaDto con los datos necesarios
                     EventoAtletaDto eventoAtleta = new EventoAtletaDto
                     {
                         idAtleta = idAtleta,
@@ -253,7 +253,6 @@ namespace WebMVC.Controllers
                         Puntaje = Puntaje
                     };
 
-                    // Ejecutar la lógica para asignar el puntaje
                     _asignarPuntaje.Ejecutar(idEvento, idAtleta, eventoAtleta);
 
                     return RedirectToAction("GetAtletasEvento", new { id = idEvento });

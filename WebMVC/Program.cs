@@ -10,6 +10,8 @@ using LogicaDeAplicacion.ImplementacionCU.UsuarioCU;
 using LogicaDeAplicacion.ImplementacionCU.AtletaCU;
 using LogicaDeAplicacion.ImplementacionCU.DisciplinaCU;
 using LogicaDeAplicacion.ImplementacionCU.EventoCU;
+using LogicaAplicacion.ImplementacionCU;
+using LogicaAplicacion.InterfacesCU;
 //Pablo 02/10/24 - 06:25
 namespace WebMVC
 {
@@ -52,6 +54,7 @@ namespace WebMVC
             builder.Services.AddScoped(typeof(ICrearDisciplina), typeof(CrearDisciplina));
             builder.Services.AddScoped(typeof(IEliminarDisciplina), typeof(EliminarDisciplina));
             builder.Services.AddScoped(typeof(IModificarDisciplina), typeof(ModificarDisciplina));
+            builder.Services.AddScoped(typeof(IGetDisciplinasPorNombre), typeof(GetDisciplinasPorNombre));
 
             //Inyeccion de dependencia para los CU evento
             builder.Services.AddScoped(typeof(IGetEventos), typeof(GetEventos));

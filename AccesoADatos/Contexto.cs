@@ -10,6 +10,7 @@ namespace AccesoADatos
         public DbSet<Atleta> Atletas { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
         public DbSet<Evento> Eventos { get; set; }
+        public DbSet<Auditoria> Auditorias { get; set; }
 
         public Contexto(DbContextOptions options) : base(options)
         {
@@ -24,6 +25,7 @@ namespace AccesoADatos
             modelBuilder.Entity<Disciplina>().OwnsOne(disciplina => disciplina.Nombre);
             modelBuilder.Entity<Evento>(evento => evento.HasKey(e => e.Id));
             modelBuilder.Entity<EventoAtleta>(eventoatleta => eventoatleta.HasKey(ea => new {ea.idEvento, ea.idAtleta}));
+            modelBuilder.Entity<Auditoria>(auditoria => auditoria.HasKey(a => a.Id));
 
             modelBuilder.Entity<EventoAtleta>()
                 .HasOne(ea => ea.Evento)

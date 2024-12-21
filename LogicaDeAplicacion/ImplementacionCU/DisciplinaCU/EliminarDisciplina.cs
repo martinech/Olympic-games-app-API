@@ -12,11 +12,11 @@ namespace LogicaDeAplicacion.ImplementacionCU
             _repositorioDisciplina = repositorio;
         }
 
-        public void Ejecutar(int id)
+        public void Ejecutar(int id, string emailUsuario)
         {
             try
             {
-                _repositorioDisciplina.Eliminar(id);
+                _repositorioDisciplina.Eliminar(id, emailUsuario);
             }
             catch (Exception e)
             {

@@ -4,6 +4,6 @@ namespace LogicaDeAplicacion.InterfacesCU.IAtletaCU
 {
     public interface IModificarDisciplina
     {
-        void Ejecutar(int id, DisciplinaDto disciplinaDto);
+        void Ejecutar(int id, DisciplinaDto disciplinaDto, string emailUsuario);
     }
 }

@@ -15,14 +15,14 @@ namespace LogicaDeAplicacion.ImplementacionCU
             _repositorioDisciplina = repositorio;
         }
 
-        public void Ejecutar(int id, DisciplinaDto disciplinaDto)
+        public void Ejecutar(int id, DisciplinaDto disciplinaDto, string emailUsuario)
         {
             Disciplina disciplina = disciplinaDto.ToDisciplina();
 
             try
             {
                 disciplina.Validar();
-                _repositorioDisciplina.Modificar(id, disciplina);
+                _repositorioDisciplina.Modificar(id, disciplina, emailUsuario);
             }
             catch (DatoInvalidoException e)
             {

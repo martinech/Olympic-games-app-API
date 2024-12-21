@@ -53,7 +53,7 @@ namespace AccesoADatos
 
         public IEnumerable<Evento> GetEventosPorFecha(DateTime fechaevento)
         {
-            return _contexto.Set<Evento>().Where(evento => evento.FechaFin ==  fechaevento);
+            return _contexto.Set<Evento>().Where(evento => evento.FechaFin ==  fechaevento).ToList();//Agregue ToList();
         }
 
         public void ModificarEventoAtleta(int idEvento, int idAtleta, EventoAtleta eventoAtleta)
@@ -63,6 +63,28 @@ namespace AccesoADatos
             eventoAtletaAModificar.Copiar(eventoAtleta);
             _contexto.Entry(eventoAtletaAModificar).State = EntityState.Modified;
             _contexto.SaveChanges();
+        }
+
+        public IEnumerable<Evento> GetEventosPorDisciplina(string disciplina)
+        {
+            return _contexto.Set<Evento>().Where(e => e.Disciplina  == disciplina).ToList();
+        }
+
+        public IEnumerable<Evento> GetEventosPorNombre(string nombre)
+        {
+            return _contexto.Set<Evento>()
+                        .Where(e => e.Nombre.Contains(nombre)).ToList();
+        }
+
+        public IEnumerable<Evento> GetEventosPorFechas(DateTime fechaInicio, DateTime fechaFin)
+        {
+            return _contexto.Set<Evento>().Where(e => e.FechaInicio >= fechaInicio && e.FechaInicio <= fechaFin).ToList();
+        }
+
+        public IEnumerable<Evento> GetEventosPorPuntajes(int puntaje1, int puntaje2)
+        {
+            return _contexto.Set<Evento>().Where(e => e.EventoAtletas.Any(ea => ea.Puntaje >= puntaje1 && ea.Puntaje <= puntaje2))
+               .ToList();
         }
     }
 }

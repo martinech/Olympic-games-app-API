@@ -2,6 +2,6 @@
 {
     public interface IEliminarDisciplina
     {
-        void Ejecutar(int id);
+        void Ejecutar(int id, string emailUsuario);
     }
 }

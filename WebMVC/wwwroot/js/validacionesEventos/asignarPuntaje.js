@@ -6,9 +6,9 @@ function inicial() {
 
 function asignarPuntaje(p) {
     p.preventDefault();
-    let puntaje = document.querySelector("#Puntaje").value;
+    let puntaje = document.querySelector("#puntaje").value;
     let parrafo = document.querySelector("#parrafoPuntaje");
-    let formulario = document.querySelector("#formularioEvento");
+    let formulario = document.querySelector("#formularioPuntaje");
 
     if (puntaje < 0)
         parrafo.innerHTML = "El puntaje no puede ser menor a 0";

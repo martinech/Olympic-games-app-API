@@ -10,6 +10,7 @@ namespace Dto
         public string Rol { get; set; }
         public DateTime FechaAlta { get; set; }
         public string EmailAdministrador { get; set; }
+        public string token { get; set; }
 
         public UsuarioDto() { }
 

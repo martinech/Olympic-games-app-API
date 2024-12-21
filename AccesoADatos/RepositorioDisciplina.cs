@@ -1,6 +1,8 @@
-﻿using LogicaDeNegocio.Entidades;
+﻿using Azure;
+using LogicaDeNegocio.Entidades;
 using LogicaDeNegocio.Exceptions;
 using LogicaDeNegocio.InterfacesRepositorios;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccesoADatos
@@ -12,14 +14,25 @@ namespace AccesoADatos
         {
             _contexto = contexto;
         }
-        public void Crear(Disciplina disciplina)
+        public void Crear(Disciplina disciplina, string emailUsuario)
         {
             if (_contexto.Set<Disciplina>().Any(d => d.Nombre.Disciplina == disciplina.Nombre.Disciplina))
-                throw new DatoInvalidoException("Ya existe una disciplina no este nombre");
+                throw new DatoInvalidoException("Ya existe una disciplina con este nombre");
             else
             {
                 _contexto.Set<Disciplina>().Add(disciplina);
                 _contexto.SaveChanges();
+                Auditoria registro = new Auditoria()
+                {
+                    Fecha = DateTime.Now,
+                    Operacion = "Crear",
+                    Entidad = "Disciplina",
+                    IdEntidad = disciplina.Id,
+                    EmailUsuario = "user1@example.com"
+                };
+                _contexto.Set<Auditoria>().Add(registro);
+                _contexto.SaveChanges();
+
             }
             
         }
@@ -32,26 +45,58 @@ namespace AccesoADatos
         {
             return _contexto.Set<Disciplina>().FirstOrDefault(disciplina => disciplina.Id == id);
         }
-        public void Eliminar(int id)
+        public void Eliminar(int id, string emailUsuario)
         {
-            Disciplina disciplinaAEliminar = _contexto.Set<Disciplina>().FirstOrDefault(t => t.Id == id);
+            Disciplina disciplinaAEliminar = _contexto.Set<Disciplina>().FirstOrDefault(d => d.Id == id);
 
             if (disciplinaAEliminar is not null)
             {
                 _contexto.Set<Disciplina>().Remove(disciplinaAEliminar);
                 _contexto.SaveChanges();
+                Auditoria registro = new Auditoria()
+                {
+                    Fecha = DateTime.Now,
+                    Operacion = "Eliminar",
+                    Entidad = "Disciplina",
+                    IdEntidad = disciplinaAEliminar.Id,
+                    EmailUsuario = "user1@example.com"
+                };
+                _contexto.Set<Auditoria>().Add(registro);
+                _contexto.SaveChanges();
             }
             else
             {
-                throw new UsuarioInvalidoException("La disciplina que desea eliminar no se ha encontrado");
+                throw new NotFoundException("La disciplina que desea eliminar no se ha encontrado");
             }
         }
 
-        public void Modificar(int id, Disciplina disciplina)
+        public void Modificar(int id, Disciplina disciplina, string emailUsuario)
         {
-            Disciplina DisciplinaAModificar = _contexto.Set<Disciplina>().FirstOrDefault(t => t.Id == id);
+            Disciplina DisciplinaAModificar = _contexto.Set<Disciplina>().FirstOrDefault(d => d.Id == id);
             DisciplinaAModificar.Copiar(disciplina);
             _contexto.Entry(DisciplinaAModificar).State = EntityState.Modified;
+            _contexto.SaveChanges();
+            Auditoria registro = new Auditoria()
+            {
+                Fecha = DateTime.Now,
+                Operacion = "Modificar",
+                Entidad = "Disciplina",
+                IdEntidad = DisciplinaAModificar.Id,
+                EmailUsuario = "user1@example.com"
+            };
+            _contexto.Set<Auditoria>().Add(registro);
+            _contexto.SaveChanges();
+        }
+
+        public IEnumerable<Disciplina> GetDisciplinasPorNombre(string nombre)
+        {
+            return _contexto.Set<Disciplina>()
+                        .Where(d => d.Nombre.Disciplina.Contains(nombre)).ToList();
+        }
+
+        public void AgregarRegistro(Auditoria auditoria)
+        {
+            _contexto.Set<Auditoria>().Add(auditoria);
             _contexto.SaveChanges();
         }
     }

@@ -145,7 +145,8 @@ namespace WebMVC.Controllers
             };
             try
             {
-                _crearDisciplina.Ejecutar(nuevaDisciplina);
+                string emailUsuario = HttpContext.Session.GetString("emailLogueado");
+                _crearDisciplina.Ejecutar(nuevaDisciplina, emailUsuario);
                 return RedirectToAction("GestionDeDisciplinas");
             }
             catch (UsuarioInvalidoException e)
@@ -180,7 +181,8 @@ namespace WebMVC.Controllers
         {
             try
             {
-                _modificarDisciplina.Ejecutar(id, disciplinaDto);
+                string emailUsuario = HttpContext.Session.GetString("emailLogueado");
+                _modificarDisciplina.Ejecutar(id, disciplinaDto, emailUsuario);
 
             }
             catch (DatoInvalidoException e)
@@ -219,7 +221,8 @@ namespace WebMVC.Controllers
         {
             if (HttpContext.Session.GetString("rolLogueado") == "digit")
             {
-                _eliminarDisciplina.Ejecutar(id);
+                string emailUsuario = HttpContext.Session.GetString("emailLogueado");
+                _eliminarDisciplina.Ejecutar(id, emailUsuario);
                 return RedirectToAction("GestionDeDisciplinas");
             }
             else

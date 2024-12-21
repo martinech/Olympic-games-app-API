@@ -14,11 +14,11 @@ namespace LogicaDeAplicacion.ImplementacionCU
         {
             _repositorioDisciplina = repositorio;
         }
-        public void Ejecutar(DisciplinaDto disciplinaDto)
+        public void Ejecutar(DisciplinaDto disciplinaDto, string emailUsuario)
         {
             Disciplina disciplinaNuevo = disciplinaDto.ToDisciplina();
             disciplinaNuevo.Validar();
-            _repositorioDisciplina.Crear(disciplinaNuevo);
+            _repositorioDisciplina.Crear(disciplinaNuevo, emailUsuario);
         }
     }
 }

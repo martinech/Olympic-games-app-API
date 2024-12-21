@@ -4,19 +4,19 @@ using LogicaDeNegocio.InterfacesRepositorios;
 
 namespace LogicaDeAplicacion.ImplementacionCU.EventoCU
 {
-    public class GetEventosPorFecha : IGetEventosPorFecha
+    public class GetEventosPorFechas : IGetEventosPorFechas
     {
         private readonly IRepositorioEvento _repositorioEvento;
 
-        public GetEventosPorFecha(IRepositorioEvento repositorioEvento)
+        public GetEventosPorFechas(IRepositorioEvento repositorioEvento)
         {
             _repositorioEvento = repositorioEvento;
         }
-        public List<EventoDto> Ejecutar(DateTime fecha)
+        public List<EventoDto> Ejecutar(DateTime fechaInicio, DateTime fechaFin)
         {
             List<EventoDto> eventosDto = new List<EventoDto>();
 
-            foreach (var evento in _repositorioEvento.GetEventosPorFecha(fecha))
+            foreach (var evento in _repositorioEvento.GetEventosPorFechas(fechaInicio, fechaFin))
                 eventosDto.Add(new EventoDto(evento));
 
             return eventosDto;

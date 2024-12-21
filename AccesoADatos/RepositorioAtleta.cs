@@ -36,12 +36,18 @@ namespace AccesoADatos
 
         public Atleta GetAtletaPorId(int id)
         {
-            return _contexto.Set<Atleta>().Include(a => a.Disciplinas).FirstOrDefault(u => u.Id == id);
+            return _contexto.Set<Atleta>()
+                .Include(a => a.Disciplinas)
+                .FirstOrDefault(u => u.Id == id);
         }
 
         public IEnumerable<Atleta> GetAtletas()
         {
-            return _contexto.Set<Atleta>().OrderBy(a=> a.Pais).ThenBy(a => a.Nombre).ThenBy(a => a.Apellido).ToList();
+            return _contexto.Set<Atleta>()
+                .OrderBy(a=> a.Pais)
+                .ThenBy(a => a.Nombre)
+                .ThenBy(a => a.Apellido)
+                .ToList();
         }
 
         public void Modificar(int id, Atleta atleta)
@@ -54,7 +60,13 @@ namespace AccesoADatos
 
         public IEnumerable<Atleta> GetAtletasPorDisciplina(int idDisciplina)
         {
-            return _contexto.Set<Atleta>().Include(atleta => atleta.Disciplinas).Where(atleta => atleta.Disciplinas.Any(disciplina => disciplina.Id == idDisciplina)).ToList();
+            return _contexto.Set<Atleta>()
+                .Include(atleta => atleta.Disciplinas)
+                .Where(atleta => atleta.Disciplinas
+                .Any(disciplina => disciplina.Id == idDisciplina))
+                .OrderBy(a => a.Nombre)
+                .ThenBy(a => a.Apellido)
+                .ToList();
         }
 
     }
