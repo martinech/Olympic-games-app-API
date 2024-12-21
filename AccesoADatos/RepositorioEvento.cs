@@ -33,7 +33,7 @@ namespace AccesoADatos
 
         public IEnumerable<Evento> GetEventos()
         {
-            return _contexto.Set<Evento>().ToList();
+            return _contexto.Set<Evento>().Include(eventos => eventos.EventoAtletas).ToList();
         }
 
         public void Modificar(int id, Evento evento)
