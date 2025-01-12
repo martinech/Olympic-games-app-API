@@ -31,8 +31,8 @@ namespace WebMVC.Controllers
                                         IEliminarEvento eliminarEvento,
                                         IGetEventoPorId getEventoPorId,
                                         IModificarEvento modificarEvento,
-                                        IGetEventos getEventos
-            )
+                                        IGetEventos getEventos)
+            
 
         {
             _crearUsuario = crearUsuario;
@@ -56,11 +56,9 @@ namespace WebMVC.Controllers
                 model.Usuarios = _getUsuarios.Ejecutar();
                 return View(model);
             }
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Home");
+            
         }
 
         [HttpGet]
@@ -68,34 +66,20 @@ namespace WebMVC.Controllers
         {
             if (HttpContext.Session.GetString("rolLogueado") == "admin")
                 return View();
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
+
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpPost]
-        public IActionResult CrearUsuario(string email, string password, string rol)
+        public IActionResult CrearUsuario(UsuarioDto usuarioDto)
         {
-            UsuarioDto nuevoUsuario = new UsuarioDto()
-            {
-                Email = email,
-                Password = password,
-                Rol = rol,
-                FechaAlta = DateTime.Now,
-                EmailAdministrador = HttpContext.Session.GetString("emailLogueado")
-            };
-            try
-            {
-                _crearUsuario.Ejecutar(nuevoUsuario);
-            }
-            catch (DatoInvalidoException e)
-            {
-                ViewBag.mensaje = e.Message;
-                return View();
-            }
-            return RedirectToAction("GestionDeUsuarios");       
+            OperacionConUsuario operacion = _crearUsuario.Ejecutar(usuarioDto);
+            if (operacion.Exitosa)
+                return RedirectToAction("GestionDeUsuarios");
+
+            ViewBag.mensaje = operacion.Mensaje;
+            return View();
         }   
 
         [HttpGet]

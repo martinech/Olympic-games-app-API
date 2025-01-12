@@ -1,9 +1,10 @@
 ﻿using Dto;
+using LogicaDeNegocio.Entidades;
 
 namespace LogicaDeAplicacion.InterfacesCU.IUsuarioCU
 {
     public interface ICrearUsuario
     {
-        void Ejecutar(UsuarioDto usuarioDto);
+        public OperacionConUsuario Ejecutar(UsuarioDto usuarioDto);
     }
 }

@@ -3,7 +3,6 @@ using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using LogicaDeAplicacion.InterfacesCU.IEventoCU;
 using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
 using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
-using LogicaDeNegocio.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebMVC.Models;
@@ -65,24 +64,21 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
-            try
+            UsuarioDto usuarioLogueado = _loginUsuario.Ejecutar(email, password);
+
+            if(usuarioLogueado is not null)
             {
-                UsuarioDto usuarioLogueado = _loginUsuario.Ejecutar(email, password);
                 HttpContext.Session.SetInt32("idLogueado", usuarioLogueado.Id);
                 HttpContext.Session.SetString("emailLogueado", usuarioLogueado.Email);
                 HttpContext.Session.SetString("rolLogueado", usuarioLogueado.Rol);
-                HttpContext.Session.SetString("token", usuarioLogueado.token);
 
                 if (HttpContext.Session.GetString("rolLogueado") == "admin")
                     return RedirectToAction("GestionDeUsuarios", "UsuarioAdmin");
-                else
-                    return RedirectToAction("GestionDeAtletas", "UsuarioDigit");
+
+                return RedirectToAction("GestionDeAtletas", "UsuarioDigit");
             }
-            catch (UsuarioInvalidoException e)
-            {
-                ViewBag.mensaje = e.Message;
-                return View();
-            }
+            ViewBag.errorLogin = "Datos incorrectos";
+            return View();
         }
 
         [HttpPost]

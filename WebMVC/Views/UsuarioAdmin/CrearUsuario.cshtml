@@ -7,6 +7,7 @@
 <h2>@ViewData["Title"]</h2>
 
 <form asp-action="CrearUsuario" method="post" id="formulario">
+    <input type="hidden" asp-for="EmailAdministrador" value="@Context.Session.GetString("emailLogueado")"/>
     <label>Ingresar Email</label>
     <input type="email" asp-for="Email" placeholder="Email del usuario" id="email"/><br /><br />
     <label>Ingresar Password</label>

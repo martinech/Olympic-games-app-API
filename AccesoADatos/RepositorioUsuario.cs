@@ -54,5 +54,10 @@ namespace AccesoADatos
             _contexto.Set<Usuario>().Remove(usuarioAEliminar);
             _contexto.SaveChanges();
         }
+
+        public bool YaExisteUsuarioConEmail(string email)
+        {
+            return _contexto.Set<Usuario>().Any(usuario => usuario.Email == email);
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Dto;
 using LogicaDeNegocio.InterfacesRepositorios;
 using LogicaDeNegocio.Entidades;
-using LogicaDeNegocio.Exceptions;
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using System.Security.Claims;
 using System.Text;
@@ -25,11 +24,10 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
             if (usuarioLogueado is not null)
             {
                 UsuarioDto usuarioDto = new UsuarioDto(usuarioLogueado);
-                usuarioDto.token = GenerarTokenJwt(usuarioDto.Email, usuarioDto.Rol);
+                usuarioDto.Token = GenerarTokenJwt(usuarioDto.Email, usuarioDto.Rol);
                 return usuarioDto;
             }
-            else
-                throw new UsuarioInvalidoException("Datos incorrectos");
+            return null;
         }
 
         private string GenerarTokenJwt(string email, string rol)

@@ -1,7 +1,6 @@
 ﻿using Dto;
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using LogicaDeNegocio.Entidades;
-using LogicaDeNegocio.Exceptions;
 using LogicaDeNegocio.InterfacesRepositorios;
 
 namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
@@ -14,19 +13,19 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
         {
             _repositorioUsuario = repositorio;
         }
-        public void Ejecutar(UsuarioDto usuarioDto)
+        public OperacionConUsuario Ejecutar(UsuarioDto usuarioDto)
         {
-            IEnumerable<Usuario> usuariosExistentes = _repositorioUsuario.GetUsuarios();
-            if (usuariosExistentes.Any(u => u.Email.Equals(usuarioDto.Email)))
+            OperacionConUsuario resultado = new OperacionConUsuario();
+            if (_repositorioUsuario.YaExisteUsuarioConEmail(usuarioDto.Email))
             {
-                throw new DatoInvalidoException("Ya existe un usuario con ese nombre.");
+                resultado.Exitosa = false;
+                resultado.Mensaje = "Ya existe un usuario con ese email";
+                return resultado;
             }
-            else
-            {
-                Usuario usuarioNuevo = usuarioDto.ToUsuario();
-                usuarioNuevo.Validar();
-                _repositorioUsuario.Crear(usuarioNuevo);
-            }
+            Usuario usuario = usuarioDto.ToUsuario();
+            _repositorioUsuario.Crear(usuario);
+            resultado.Exitosa = true;
+            return resultado;
         }
     }
 }

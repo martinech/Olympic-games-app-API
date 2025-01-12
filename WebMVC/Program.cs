@@ -12,7 +12,7 @@ using LogicaDeAplicacion.ImplementacionCU.DisciplinaCU;
 using LogicaDeAplicacion.ImplementacionCU.EventoCU;
 using LogicaAplicacion.ImplementacionCU;
 using LogicaAplicacion.InterfacesCU;
-//Pablo 02/10/24 - 06:25
+
 namespace WebMVC
 {
     public class Program

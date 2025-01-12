@@ -10,5 +10,6 @@ namespace LogicaDeNegocio.InterfacesRepositorios
         void Modificar(int id, Usuario usuario);
         void Eliminar(int id);
         Usuario Login(string email, string password);
+        public bool YaExisteUsuarioConEmail(string email);
     }
 }
