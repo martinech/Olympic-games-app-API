@@ -22,8 +22,7 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
                 UsuarioDto usuarioDto = new UsuarioDto(usuario);
                 return usuarioDto;
             }
-            else
-                throw new UsuarioInvalidoException("Operacion invalida");
+            return null;
         }
     }
 }

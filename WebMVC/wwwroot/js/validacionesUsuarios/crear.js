@@ -51,6 +51,5 @@ function emailEsValido(email) {
         if (email[i] == "@")
             tieneArroba = true;
     }
-
     return tieneArroba;
 }

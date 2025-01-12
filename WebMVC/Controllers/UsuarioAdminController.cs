@@ -88,28 +88,25 @@ namespace WebMVC.Controllers
             if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
                 UsuarioDto usuarioDto = _getUsuarioPorId.Ejecutar(id);
-                return View(usuarioDto);
+                if(usuarioDto is not null)
+                    return View(usuarioDto);
+
+                TempData["ErrorOperacion"] = "Operacion invalida";
+                return RedirectToAction("GestionDeUsuarios");
             }
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
+            return RedirectToAction("Logout", "AmbosUsuarios");
         }
 
         [HttpPost]
         public IActionResult ModificarUsuario(int id, UsuarioDto usuarioDto)
         {
-            try
-            {
-                _modificarUsuario.Ejecutar(id, usuarioDto);
-            }
-            catch (DatoInvalidoException e)
-            {
-                ViewBag.mensaje = e.Message;
-                return View();
-            }
-            return RedirectToAction("GestionDeUsuarios");
+            OperacionConUsuario operacion = _modificarUsuario.Ejecutar(id, usuarioDto);
+
+            if (operacion.Exitosa)
+                return RedirectToAction("GestionDeUsuarios");
+
+            ViewBag.mensaje = operacion.Mensaje;
+            return View();
         }
 
         [HttpGet]
@@ -117,22 +114,14 @@ namespace WebMVC.Controllers
         {
             if (HttpContext.Session.GetString("rolLogueado") == "admin")
             {
-                try
-                {
-                    UsuarioDto usuarioDto = _getUsuarioPorId.Ejecutar(id);
+                UsuarioDto usuarioDto = _getUsuarioPorId.Ejecutar(id);
+                if (usuarioDto is not null)
                     return View(usuarioDto);
-                }
-                catch (UsuarioInvalidoException e)
-                {
-                    TempData["MensajeError"] = e.Message;
-                    return RedirectToAction("GestionDeUsuarios");
-                }
+
+                TempData["ErrorOperacion"] = "Operacion invalida";
+                return RedirectToAction("GestionDeUsuarios");
             }
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
+            return RedirectToAction("Logout", "AmbosUsuarios");
         }
 
         [HttpPost]

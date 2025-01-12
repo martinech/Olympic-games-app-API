@@ -16,15 +16,15 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
         public OperacionConUsuario Ejecutar(UsuarioDto usuarioDto)
         {
             OperacionConUsuario resultado = new OperacionConUsuario();
-            if (_repositorioUsuario.YaExisteUsuarioConEmail(usuarioDto.Email))
+            if (!_repositorioUsuario.YaExisteUsuarioConEmail(usuarioDto.Email))
             {
-                resultado.Exitosa = false;
-                resultado.Mensaje = "Ya existe un usuario con ese email";
+                Usuario usuario = usuarioDto.ToUsuario();
+                _repositorioUsuario.Crear(usuario);
+                resultado.Exitosa = true;
                 return resultado;
             }
-            Usuario usuario = usuarioDto.ToUsuario();
-            _repositorioUsuario.Crear(usuario);
-            resultado.Exitosa = true;
+            resultado.Exitosa = false;
+            resultado.Mensaje = "Ya existe un usuario con ese email";
             return resultado;
         }
     }

@@ -1,4 +1,3 @@
-using Dto;
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using LogicaDeAplicacion.InterfacesCU.IEventoCU;
 using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
@@ -6,8 +5,8 @@ using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebMVC.Models;
-using LogicaDeNegocio.Entidades;
-
+using Dto;
+       
 namespace WebMVC.Controllers
 {
     public class AmbosUsuariosController : Controller
@@ -26,7 +25,7 @@ namespace WebMVC.Controllers
         private readonly IGetEventoPorId _getEventoPorId;
         private readonly IAsignarPuntaje _asignarPuntaje;
 
-        public AmbosUsuariosController(ILogger<AmbosUsuariosController> logger,
+        public AmbosUsuariosController( ILogger<AmbosUsuariosController> logger,
                                         ILoginUsuario loginUsuario,
                                         IGetEventos getEventos,
                                         IGetDisciplinas getDisciplinas,
