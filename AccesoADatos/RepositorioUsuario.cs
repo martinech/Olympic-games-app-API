@@ -1,7 +1,7 @@
-﻿using LogicaDeNegocio.Entidades;
-using LogicaDeNegocio.InterfacesRepositorios;
+﻿using LogicaDeNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
 using LogicaDeNegocio.Exceptions;
+using LogicaDeNegocio.Entidades;
 
 namespace AccesoADatos
 {

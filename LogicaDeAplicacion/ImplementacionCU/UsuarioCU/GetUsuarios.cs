@@ -1,6 +1,6 @@
-﻿using Dto;
+﻿using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
+using Dto;
 
 namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
 {

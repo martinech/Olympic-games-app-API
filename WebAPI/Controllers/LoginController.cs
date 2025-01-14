@@ -1,6 +1,6 @@
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
-using LogicaDeNegocio.Entidades;
 using LogicaDeNegocio.Exceptions;
+using LogicaDeNegocio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Dto;
 
