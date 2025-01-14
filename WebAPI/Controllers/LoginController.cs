@@ -1,8 +1,6 @@
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
-using LogicaDeNegocio.Exceptions;
 using LogicaDeNegocio.Entidades;
 using Microsoft.AspNetCore.Mvc;
-using Dto;
 
 namespace Obligatorio.Controllers
 {
@@ -20,30 +18,16 @@ namespace Obligatorio.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult Login([FromBody] Credenciales credenciales)
         {
-            if (credenciales == null)
-            {
-                return BadRequest("Faltan credenciales");
-            }
-            try
-            {
-                string email = credenciales.Email;
-                string password = credenciales.Password;
-                if (email == null || password == null)
-                {
-                    return BadRequest("Falta email o contraseña");
-                }
-                else
-                {
-                    UsuarioDto usuario = _loginUsuario.Ejecutar(email, password);
-                    return Ok(usuario);
-                }                
-            }
-            catch (UsuarioInvalidoException e)
-            {
-                return BadRequest(e.Message);
-            }
+            if (!credenciales.SonValidas())
+                return BadRequest();
+
+            if (_loginUsuario.Ejecutar(credenciales.Email, credenciales.Password) == null)
+                return Unauthorized();
+
+            return Ok(_loginUsuario.Ejecutar(credenciales.Email, credenciales.Password));
         }
     }
 }
