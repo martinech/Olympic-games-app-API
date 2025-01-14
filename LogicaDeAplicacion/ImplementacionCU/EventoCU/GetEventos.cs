@@ -1,7 +1,6 @@
-﻿using Dto;
+﻿using LogicaDeAplicacion.InterfacesCU.IEventoCU;
 using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeNegocio.Entidades;
-using LogicaDeAplicacion.InterfacesCU.IEventoCU;
+using Dto;
 
 namespace LogicaDeAplicacion.ImplementacionCU.EventoCU
 {
@@ -14,13 +13,7 @@ namespace LogicaDeAplicacion.ImplementacionCU.EventoCU
         }
         public IEnumerable<EventoDto> Ejecutar()
         {
-            List<EventoDto> eventosDto = new List<EventoDto>();
-            IEnumerable<Evento> eventos = _repositorioEvento.GetEventos();
-
-            foreach (Evento u in eventos)
-                eventosDto.Add(new EventoDto(u));
-
-            return eventosDto;
+            return _repositorioEvento.GetEventos().Select(evento => new EventoDto(evento));
         }
     }
 }
