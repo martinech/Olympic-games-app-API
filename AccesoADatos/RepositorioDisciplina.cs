@@ -1,9 +1,7 @@
-﻿using Azure;
-using LogicaDeNegocio.Entidades;
+﻿using LogicaDeNegocio.Entidades;
 using LogicaDeNegocio.Exceptions;
-using LogicaDeNegocio.InterfacesRepositorios;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using LogicaDeNegocio.InterfacesRepositorios;
 
 namespace AccesoADatos
 {
@@ -16,25 +14,18 @@ namespace AccesoADatos
         }
         public void Crear(Disciplina disciplina, string emailUsuario)
         {
-            if (_contexto.Set<Disciplina>().Any(d => d.Nombre.Disciplina == disciplina.Nombre.Disciplina))
-                throw new DatoInvalidoException("Ya existe una disciplina con este nombre");
-            else
+            _contexto.Set<Disciplina>().Add(disciplina);
+            _contexto.SaveChanges();
+            Auditoria registro = new Auditoria()
             {
-                _contexto.Set<Disciplina>().Add(disciplina);
-                _contexto.SaveChanges();
-                Auditoria registro = new Auditoria()
-                {
-                    Fecha = DateTime.Now,
-                    Operacion = "Crear",
-                    Entidad = "Disciplina",
-                    IdEntidad = disciplina.Id,
-                    EmailUsuario = "user1@example.com"
-                };
-                _contexto.Set<Auditoria>().Add(registro);
-                _contexto.SaveChanges();
-
-            }
-            
+                Fecha = DateTime.Now,
+                Operacion = "Crear",
+                Entidad = "Disciplina",
+                IdEntidad = disciplina.Id,
+                EmailUsuario = "user1@example.com"
+            };
+            _contexto.Set<Auditoria>().Add(registro);
+            _contexto.SaveChanges();
         }
         public IEnumerable<Disciplina> GetDisciplinas()
         {
@@ -98,6 +89,11 @@ namespace AccesoADatos
         {
             _contexto.Set<Auditoria>().Add(auditoria);
             _contexto.SaveChanges();
+        }
+
+        public bool YaExisteDisciplinaConEseNombre(string nombre)
+        {
+            return _contexto.Set<Disciplina>().Any(d => d.Nombre.Disciplina == nombre);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace LogicaDeNegocio.InterfacesRepositorios
         void Modificar(int id, Atleta atleta);
         void Eliminar(int id);
         public IEnumerable<Atleta> GetAtletasPorDisciplina(int idDisciplina);
+        public bool ExisteAtletaPorId(int id);
     }
 }

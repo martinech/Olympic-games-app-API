@@ -1,7 +1,7 @@
-﻿using Dto;
-using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
-using LogicaDeNegocio.Entidades;
+﻿using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using LogicaDeNegocio.InterfacesRepositorios;
+using LogicaDeNegocio.Entidades;
+using Dto;
 
 namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
 {
@@ -13,17 +13,17 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
         {
             _repositorioUsuario = repositorio;
         }
-        public OperacionConUsuario Ejecutar(UsuarioDto usuarioDto)
+        public OperacionCRUD Ejecutar(UsuarioDto usuarioDto)
         {
-            OperacionConUsuario resultado = new OperacionConUsuario();
+            OperacionCRUD resultado = new OperacionCRUD();
             if (!_repositorioUsuario.YaExisteUsuarioConEmail(usuarioDto.Email))
             {
                 Usuario usuario = usuarioDto.ToUsuario();
                 _repositorioUsuario.Crear(usuario);
-                resultado.Exitosa = true;
+                resultado.FueExitosa = true;
                 return resultado;
             }
-            resultado.Exitosa = false;
+            resultado.FueExitosa = false;
             resultado.Mensaje = "Ya existe un usuario con ese email";
             return resultado;
         }

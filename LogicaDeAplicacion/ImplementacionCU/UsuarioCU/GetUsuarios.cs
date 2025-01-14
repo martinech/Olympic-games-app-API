@@ -1,6 +1,5 @@
 ﻿using Dto;
 using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeNegocio.Entidades;
 using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 
 namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
@@ -14,13 +13,7 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
         }
         public IEnumerable<UsuarioDto> Ejecutar()
         {
-            List<UsuarioDto> usuariosDto = new List<UsuarioDto>();
-            IEnumerable<Usuario> usuarios = _repositorioUsuario.GetUsuarios();
-
-            foreach (Usuario u in usuarios)
-                usuariosDto.Add(new UsuarioDto(u));
-
-            return usuariosDto;
+            return _repositorioUsuario.GetUsuarios().Select(usuario => new UsuarioDto(usuario));
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogicaDeNegocio.Entidades
+﻿namespace LogicaDeNegocio.Entidades
 {
     public class Nombre
     {
@@ -18,6 +12,11 @@ namespace LogicaDeNegocio.Entidades
         public Nombre(string disciplina)
         {
             Disciplina = disciplina;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
         }
     }
 }

@@ -18,16 +18,6 @@ namespace Dto
             AnioDeIntegracion = disciplina.AnioDeIntegracion;
         }
 
-        public List<AtletaDto> AtletasToAtletasDto(List<Atleta> atletas)
-        {
-            List<AtletaDto> atletasDto = new List<AtletaDto>();
-
-            foreach (Atleta atleta in atletas)
-                atletasDto.Add(new AtletaDto(atleta));
-
-            return atletasDto;
-        }
-
         public List<Atleta> AtletasDtoToAtletas()
         {
             List<Atleta> atletas = new List<Atleta>();

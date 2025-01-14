@@ -5,6 +5,6 @@ namespace LogicaDeAplicacion.InterfacesCU.IUsuarioCU
 {
     public interface IModificarUsuario
     {
-        public OperacionConUsuario Ejecutar(int id, UsuarioDto usuarioDto);
+        public OperacionCRUD Ejecutar(int id, UsuarioDto usuarioDto);
     }
 }

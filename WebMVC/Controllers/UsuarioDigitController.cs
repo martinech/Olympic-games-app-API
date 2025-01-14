@@ -1,10 +1,9 @@
-﻿using Dto;
-using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
+﻿using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
 using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
 using LogicaDeNegocio.Entidades;
-using LogicaDeNegocio.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using WebMVC.Models;
+using Dto;
 
 namespace WebMVC.Controllers
 {
@@ -54,69 +53,48 @@ namespace WebMVC.Controllers
                 gestAtlViewModel.Atletas = _getAtletas.Ejecutar();
                 return View(gestAtlViewModel);
             }
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpGet]
         public IActionResult GetDisciplinas(int id)
         {
-            try
-            {
-                GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
-                disciplinasVM.Disciplinas = _getDisciplinas.Ejecutar();
-                disciplinasVM.Atleta = _getAtletaPorId.Ejecutar(id);
+            AtletaDto atletaDto = _getAtletaPorId.Ejecutar(id);
 
-                if (disciplinasVM.Atleta == null)
-                {
-                    // Maneja el caso en que no se encuentre el atleta
-                    return RedirectToAction("Error", "Home", new { mensaje = "Atleta no encontrado" });
-                }
-                else
-                {
-                    return View(disciplinasVM);
-                }
-            }
-            catch (Exception ex)
+            if (atletaDto == null)
             {
-                return RedirectToAction("Error", "Home", new { mensaje = "Se produjo un error inesperado" });
+                TempData["ErrorAtleta"] = "Operacion Invalida";
+                return RedirectToAction("GestionDeAtletas");
             }
+            var disciplinas = _getDisciplinas.Ejecutar();
+
+            GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel
+            {
+                Atleta = atletaDto,
+                Disciplinas = disciplinas.Where(d => !atletaDto.DisciplinasDto.Select(ad => ad.Nombre).Contains(d.Nombre))
+            };
+            return View(disciplinasVM);
         }
 
         [HttpGet]
         public IActionResult GestionDeDisciplinas()
         {
-            if(HttpContext.Session.GetString("rolLogueado") == "digit")
+            if (HttpContext.Session.GetString("rolLogueado") == "digit")
             {
-                try
-                {
-                    GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
-                    disciplinasVM.Disciplinas = _getDisciplinas.Ejecutar();
+                IEnumerable<DisciplinaDto> disciplinas = _getDisciplinas.Ejecutar();
 
-                    if (disciplinasVM.Disciplinas == null || !disciplinasVM.Disciplinas.Any())
-                    {
-                        // Maneja el caso en que no se encuentren disciplinas
-                        return RedirectToAction("Error", "Home", new { mensaje = "No hay disciplinas ingresadas" });
-                    }
-                    else
-                    {
-                        return View(disciplinasVM);
-                    }
-                }
-                catch (Exception ex)
+                if (!disciplinas.Any())
                 {
-                    Console.WriteLine($"Error al obtener disciplinas {ex.Message}");
-                    return RedirectToAction("Error", "Home", new { mensaje = "Se produjo un error inesperado" });
+                    ViewBag.mensaje = "No hay disciplinas para mostrar";
+                    return View();
                 }
+                GestionDisciplinasViewModel disciplinasVM = new GestionDisciplinasViewModel();
+                disciplinasVM.Disciplinas = disciplinas;
+                return View(disciplinasVM);
             }
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpPost]
@@ -131,34 +109,21 @@ namespace WebMVC.Controllers
         {
             if (HttpContext.Session.GetString("rolLogueado") == "digit")
                 return View();
-            else
-                return RedirectToAction("Login", "Home");
+
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpPost]
-        public IActionResult CrearDisciplina(string nombre, int anioDeIntegracion)
+        public IActionResult CrearDisciplina(DisciplinaDto disciplinaDto)
         {
-            DisciplinaDto nuevaDisciplina = new DisciplinaDto()
-            {
-                Nombre = nombre,
-                AnioDeIntegracion = anioDeIntegracion,
-            };
-            try
-            {
-                string emailUsuario = HttpContext.Session.GetString("emailLogueado");
-                _crearDisciplina.Ejecutar(nuevaDisciplina, emailUsuario);
+            string emailUsuario = HttpContext.Session.GetString("emailLogueado");
+            OperacionCRUD operacion = _crearDisciplina.Ejecutar(disciplinaDto, emailUsuario);
+
+            if (operacion.FueExitosa)
                 return RedirectToAction("GestionDeDisciplinas");
-            }
-            catch (UsuarioInvalidoException e)
-            {
-                ViewBag.mensaje = e.Message;
-                return View();
-            }
-            catch (DatoInvalidoException e)
-            {
-                ViewBag.mensage = e.Message;
-                return View();
-            }
+
+            ViewBag.mensaje = operacion.Mensaje;
+            return View();
         }
 
         [HttpGet]
@@ -167,30 +132,28 @@ namespace WebMVC.Controllers
             if (HttpContext.Session.GetString("rolLogueado") == "digit")
             {
                 DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(id);
+                if(disciplinaDto == null)
+                {
+                    TempData["ErrorDeId"] = "Operacion Invalida";
+                    return RedirectToAction("GestionDeDisciplinas");
+                }
                 return View(disciplinaDto);
             }
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpPost]
         public IActionResult ModificarDisciplina(int id, DisciplinaDto disciplinaDto)
         {
-            try
-            {
-                string emailUsuario = HttpContext.Session.GetString("emailLogueado");
-                _modificarDisciplina.Ejecutar(id, disciplinaDto, emailUsuario);
+            string emailUsuario = HttpContext.Session.GetString("emailLogueado");
+            OperacionCRUD operacion = _modificarDisciplina.Ejecutar(id, disciplinaDto, emailUsuario);
 
-            }
-            catch (DatoInvalidoException e)
-            {
-                ViewBag.mensaje = e.Message;
-                return View();
-            }
-            return RedirectToAction("GestionDeDisciplinas");
+            if (operacion.FueExitosa)
+                return RedirectToAction("GestionDeDisciplinas");
+
+            ViewBag.mensaje = operacion.Mensaje;
+            return View();
         }
         
         [HttpGet]
@@ -198,22 +161,16 @@ namespace WebMVC.Controllers
         {
             if (HttpContext.Session.GetString("rolLogueado") == "digit")
             {
-                try
+                DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(id);
+                if (disciplinaDto == null)
                 {
-                    DisciplinaDto disciplinaDto = _getDisciplinaPorId.Ejecutar(id);
-                    return View(disciplinaDto);
+                    TempData["ErrorDeId"] = "Operacion Invalida";
+                    return RedirectToAction("GestionDeDisciplinas");
                 }
-                catch (UsuarioInvalidoException e)
-                {
-                    TempData["MensajeError"] = e.Message;
-                    return RedirectToAction("GestionDeUsuarios");
-                }
+                return View(disciplinaDto);
             }
-            else
-            {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "Home");
-            }
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpPost]

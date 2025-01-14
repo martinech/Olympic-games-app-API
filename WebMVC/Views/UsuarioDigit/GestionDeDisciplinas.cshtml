@@ -7,10 +7,10 @@
 <p>Bienvenido @Context.Session.GetString("rolLogueado")</p>
 
 <h2>@ViewData["Title"]</h2>
-@if (TempData["MensajeError"] != null)
+@if (TempData["ErrorDeId"] != null)
 {
     <div class="alert alert-danger">
-        @TempData["MensajeError"]
+        @TempData["ErrorDeId"]
     </div>
 }
 <a asp-action="CrearDisciplina" class="btn btn-success" style="float: right">Crear Disciplina</a>

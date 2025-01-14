@@ -10,5 +10,6 @@ namespace LogicaDeNegocio.InterfacesRepositorios
         public IEnumerable<Disciplina> GetDisciplinasPorNombre(string nombre);
         void Modificar(int id, Disciplina disciplina, string emailUsuario);
         void Eliminar(int id, string emailUsuario);
+        public bool YaExisteDisciplinaConEseNombre(string nombre);
     }
 }

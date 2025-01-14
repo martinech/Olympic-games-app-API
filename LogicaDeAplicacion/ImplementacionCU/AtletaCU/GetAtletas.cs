@@ -1,7 +1,6 @@
-﻿using Dto;
+﻿using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
 using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeNegocio.Entidades;
-using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
+using Dto;
 
 namespace LogicaDeAplicacion.ImplementacionCU.AtletaCU
 {
@@ -14,13 +13,7 @@ namespace LogicaDeAplicacion.ImplementacionCU.AtletaCU
         }
         public IEnumerable<AtletaDto> Ejecutar()
         {
-            List<AtletaDto> atletasDto = new List<AtletaDto>();
-            IEnumerable<Atleta> atletas = _repositorioAtleta.GetAtletas();
-
-            foreach (Atleta u in atletas)
-                atletasDto.Add(new AtletaDto(u));
-
-            return atletasDto;
+            return _repositorioAtleta.GetAtletas().Select(atleta => new AtletaDto(atleta));
         }
     }
 }

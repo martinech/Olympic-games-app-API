@@ -1,9 +1,10 @@
 ﻿using Dto;
+using LogicaDeNegocio.Entidades;
 
 namespace LogicaDeAplicacion.InterfacesCU.IAtletaCU
 {
     public interface ICrearDisciplina
     {
-        void Ejecutar(DisciplinaDto disciplinaDto, string emailUsuario);
+        public OperacionCRUD Ejecutar(DisciplinaDto disciplinaDto, string emailUsuario);
     }
 }

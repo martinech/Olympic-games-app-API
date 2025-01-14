@@ -74,8 +74,8 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult CrearUsuario(UsuarioDto usuarioDto)
         {
-            OperacionConUsuario operacion = _crearUsuario.Ejecutar(usuarioDto);
-            if (operacion.Exitosa)
+            OperacionCRUD operacion = _crearUsuario.Ejecutar(usuarioDto);
+            if (operacion.FueExitosa)
                 return RedirectToAction("GestionDeUsuarios");
 
             ViewBag.mensaje = operacion.Mensaje;
@@ -100,9 +100,9 @@ namespace WebMVC.Controllers
         [HttpPost]
         public IActionResult ModificarUsuario(int id, UsuarioDto usuarioDto)
         {
-            OperacionConUsuario operacion = _modificarUsuario.Ejecutar(id, usuarioDto);
+            OperacionCRUD operacion = _modificarUsuario.Ejecutar(id, usuarioDto);
 
-            if (operacion.Exitosa)
+            if (operacion.FueExitosa)
                 return RedirectToAction("GestionDeUsuarios");
 
             ViewBag.mensaje = operacion.Mensaje;
@@ -129,28 +129,6 @@ namespace WebMVC.Controllers
         {
             _eliminarUsuario.Ejecutar(id);
             return RedirectToAction("GestionDeUsuarios");
-        }
-
-        [HttpPost]
-        public IActionResult CrearEvento(string nombre, string disciplina, DateTime fechaInicio, DateTime fechaFin)
-        {
-            EventoDto nuevoEvento = new EventoDto()
-            {
-                Nombre = nombre,
-                Disciplina = disciplina,
-                FechaInicio = fechaInicio,
-                FechaFin = fechaFin
-            };
-            try
-            {
-                _crearEvento.Ejecutar(nuevoEvento);
-            }
-            catch (DatoInvalidoException e)
-            {
-                ViewBag.mensaje = e.Message;
-                return View();
-            }
-            return RedirectToAction("GestionDeEventos");
         }
 
         [HttpGet]

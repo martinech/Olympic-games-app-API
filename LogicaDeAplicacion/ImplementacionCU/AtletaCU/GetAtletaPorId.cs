@@ -1,6 +1,6 @@
-﻿using Dto;
-using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
+﻿using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
 using LogicaDeNegocio.InterfacesRepositorios;
+using Dto;
 
 namespace LogicaDeAplicacion.ImplementacionCU.AtletaCU
 {
@@ -14,6 +14,9 @@ namespace LogicaDeAplicacion.ImplementacionCU.AtletaCU
         }
         public AtletaDto Ejecutar(int id)
         {
+            if (!_repositorioAtleta.ExisteAtletaPorId(id))
+                return null;
+
             AtletaDto atletaDto = new AtletaDto(_repositorioAtleta.GetAtletaPorId(id));
             return atletaDto;
         }

@@ -1,7 +1,7 @@
-﻿using LogicaDeNegocio.Entidades;
-using LogicaDeNegocio.InterfacesRepositorios;
+﻿using LogicaDeNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
 using LogicaDeNegocio.Exceptions;
+using LogicaDeNegocio.Entidades;
 
 namespace AccesoADatos
 {
@@ -67,6 +67,11 @@ namespace AccesoADatos
                 .OrderBy(a => a.Nombre)
                 .ThenBy(a => a.Apellido)
                 .ToList();
+        }
+
+        public bool ExisteAtletaPorId(int id)
+        {
+            return _contexto.Set<Atleta>().Any(atleta => atleta.Id == id);
         }
 
     }

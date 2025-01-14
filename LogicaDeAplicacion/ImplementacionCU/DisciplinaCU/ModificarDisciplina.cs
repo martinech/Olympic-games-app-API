@@ -1,8 +1,7 @@
-﻿using LogicaDeNegocio.InterfacesRepositorios;
-using Dto;
+﻿using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
+using LogicaDeNegocio.InterfacesRepositorios;
 using LogicaDeNegocio.Entidades;
-using LogicaDeNegocio.Exceptions;
-using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
+using Dto;
 
 namespace LogicaDeAplicacion.ImplementacionCU
 {
@@ -15,19 +14,20 @@ namespace LogicaDeAplicacion.ImplementacionCU
             _repositorioDisciplina = repositorio;
         }
 
-        public void Ejecutar(int id, DisciplinaDto disciplinaDto, string emailUsuario)
+        public OperacionCRUD Ejecutar(int id, DisciplinaDto disciplinaDto, string emailUsuario)
         {
             Disciplina disciplina = disciplinaDto.ToDisciplina();
+            OperacionCRUD operacion = new OperacionCRUD();
 
-            try
+            if (!_repositorioDisciplina.YaExisteDisciplinaConEseNombre(disciplinaDto.Nombre))
             {
-                disciplina.Validar();
                 _repositorioDisciplina.Modificar(id, disciplina, emailUsuario);
+                operacion.FueExitosa = true;
+                return operacion;
             }
-            catch (DatoInvalidoException e)
-            {
-                throw;
-            }
+            operacion.FueExitosa = false;
+            operacion.Mensaje = "El nombre que intenta ingresar no esta disponible";
+            return operacion;
         }
     }
 }

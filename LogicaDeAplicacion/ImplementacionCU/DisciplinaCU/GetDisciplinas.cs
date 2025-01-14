@@ -1,7 +1,6 @@
 ﻿using Dto;
 using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
 using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeNegocio.Entidades;
 
 namespace LogicaDeAplicacion.ImplementacionCU.DisciplinaCU
 {
@@ -15,13 +14,7 @@ namespace LogicaDeAplicacion.ImplementacionCU.DisciplinaCU
         }
         public IEnumerable<DisciplinaDto> Ejecutar()
         {
-            List<DisciplinaDto> disciplinasDto = new List<DisciplinaDto>();
-            IEnumerable<Disciplina> disciplinas = _repositorioDisciplina.GetDisciplinas();
-
-            foreach (Disciplina d in disciplinas)
-                disciplinasDto.Add(new DisciplinaDto(d));
-
-            return disciplinasDto;
+            return _repositorioDisciplina.GetDisciplinas().Select(disciplina => new DisciplinaDto(disciplina));
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using Dto;
-using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
+﻿using LogicaDeAplicacion.InterfacesCU.IDisciplinaCU;
 using LogicaDeNegocio.InterfacesRepositorios;
 using LogicaDeNegocio.Entidades;
-using LogicaDeNegocio.Exceptions;
+using Dto;
 
 namespace LogicaDeAplicacion.ImplementacionCU.DisciplinaCU
 {
@@ -17,12 +16,12 @@ namespace LogicaDeAplicacion.ImplementacionCU.DisciplinaCU
         public DisciplinaDto Ejecutar(int id)
         {
             Disciplina disciplina = _repositorioDisciplina.GetDisciplinaPorId(id);
-            if (disciplina == null)
+            if (disciplina is not null)
             {
-                throw new NotFoundException("No se encontró la disciplina");
+                DisciplinaDto disciplinaDto = new DisciplinaDto(disciplina);
+                return disciplinaDto;
             }
-            DisciplinaDto disciplinaDto = new DisciplinaDto(disciplina);
-            return disciplinaDto;
+            return null;
         }
     }
 }

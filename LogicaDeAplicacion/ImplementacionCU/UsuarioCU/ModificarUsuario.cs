@@ -1,6 +1,5 @@
 ﻿using LogicaDeAplicacion.InterfacesCU.IUsuarioCU;
 using LogicaDeNegocio.InterfacesRepositorios;
-using LogicaDeNegocio.Exceptions;
 using LogicaDeNegocio.Entidades;
 using Dto;
 
@@ -15,17 +14,17 @@ namespace LogicaDeAplicacion.ImplementacionCU.UsuarioCU
             _repositorioUsuario = repositorio;
         }
 
-        public OperacionConUsuario Ejecutar(int id, UsuarioDto usuarioDto)
+        public OperacionCRUD Ejecutar(int id, UsuarioDto usuarioDto)
         {
-            OperacionConUsuario operacion = new OperacionConUsuario();
+            OperacionCRUD operacion = new OperacionCRUD();
             if (!_repositorioUsuario.YaExisteUsuarioConEmail(usuarioDto.Email))
             {
                 Usuario usuario = usuarioDto.ToUsuario();
                 _repositorioUsuario.Modificar(id, usuario);
-                operacion.Exitosa = true;
+                operacion.FueExitosa = true;
                 return operacion;
             }
-            operacion.Exitosa = false;
+            operacion.FueExitosa = false;
             operacion.Mensaje = "El mail que intenta guardar ya existe";
             return operacion;
         }
