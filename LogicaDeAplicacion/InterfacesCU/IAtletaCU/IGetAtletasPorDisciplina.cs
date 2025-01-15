@@ -4,6 +4,6 @@ namespace LogicaDeAplicacion.InterfacesCU.IAtletaCU
 {
     public interface IGetAtletasPorDisciplina
     {
-        public List<AtletaDto> Ejecutar(int idDisciplina);
+        public IEnumerable<AtletaDto> Ejecutar(int idDisciplina);
     }
 }

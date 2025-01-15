@@ -1,8 +1,6 @@
-﻿using Dto;
-using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
-using LogicaDeNegocio.Entidades;
-using LogicaDeNegocio.Exceptions;
+﻿using LogicaDeAplicacion.InterfacesCU.IAtletaCU;
 using LogicaDeNegocio.InterfacesRepositorios;
+using Dto;
 
 namespace LogicaDeAplicacion.ImplementacionCU.AtletaCU
 {
@@ -14,18 +12,10 @@ namespace LogicaDeAplicacion.ImplementacionCU.AtletaCU
         {
             _repositorioAtleta = repositorioAtleta;
         }
-        public List<AtletaDto> Ejecutar(int idDisciplina)
+
+        public IEnumerable<AtletaDto> Ejecutar(int idDisciplina)
         {
-            List<AtletaDto> atletasPorDisciplina = new List<AtletaDto>();
-
-            foreach (var atleta in _repositorioAtleta.GetAtletasPorDisciplina(idDisciplina))
-                atletasPorDisciplina.Add(new AtletaDto(atleta));
-            if (atletasPorDisciplina.Count() == 0)
-            {
-                throw new NotFoundException("No se encontraron atletas con esta disciplina");
-            }
-
-            return atletasPorDisciplina;
+            return _repositorioAtleta.GetAtletasPorDisciplina(idDisciplina).Select(atleta => new AtletaDto(atleta));
         }
     }
 }

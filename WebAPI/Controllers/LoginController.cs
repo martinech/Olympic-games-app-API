@@ -22,10 +22,10 @@ namespace Obligatorio.Controllers
         public IActionResult Login([FromBody] Credenciales credenciales)
         {
             if (!credenciales.SonValidas())
-                return BadRequest();
+                return BadRequest("Faltan datos");
 
             if (_loginUsuario.Ejecutar(credenciales.Email, credenciales.Password) == null)
-                return Unauthorized();
+                return Unauthorized("Datos incorrectos");
 
             return Ok(_loginUsuario.Ejecutar(credenciales.Email, credenciales.Password));
         }

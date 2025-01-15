@@ -43,11 +43,7 @@ namespace AccesoADatos
 
         public IEnumerable<Atleta> GetAtletas()
         {
-            return _contexto.Set<Atleta>()
-                .OrderBy(a=> a.Pais)
-                .ThenBy(a => a.Nombre)
-                .ThenBy(a => a.Apellido)
-                .ToList();
+            return _contexto.Set<Atleta>().ToList();
         }
 
         public void Modificar(int id, Atleta atleta)

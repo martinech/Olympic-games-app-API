@@ -79,6 +79,7 @@ namespace WebAPI
             builder.Services.AddScoped(typeof(IGetDisciplinas), typeof(GetDisciplinas));
             builder.Services.AddScoped(typeof(ILoginUsuario), typeof(LoginUsuario));
             builder.Services.AddScoped(typeof(IGetAtletasPorDisciplina), typeof(GetAtletasPorDisciplina));
+            builder.Services.AddScoped(typeof(IGetAtletas), typeof(GetAtletas));
 
 
             builder.Services.AddControllers();
