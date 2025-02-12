@@ -34,10 +34,10 @@ This application was developed as an assignment for **Programación 3** at **ORT
 Olympic-games-app/
 ├── AccesoADatos/
 ├── Dto/
-├── LogicaDeAplicacion
-├── LogicaDeNegocio
-├── WebAPI
-├── WebMVC
+├── LogicaDeAplicacion/
+├── LogicaDeNegocio/
+├── WebAPI/
+├── WebMVC/
 ├── Obligatorio.sln
 ├── DatosSeed.sql
 ├── README.md
