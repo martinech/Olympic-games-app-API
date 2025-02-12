@@ -7,20 +7,33 @@ More specifically, this app let's the user register, login and depending on weth
 This application was developed as an assignment for **Programación 3** at **ORT University**.
 
 ## 🚀 Features
-- Feature 1: JWT Authorized Login and different responsabilities assigned based on user's role (admin/scorer).
-- Feature 2: The scorer is able to asign a sport discipline to an athlete.
-- Feature 3: Disciplines are able to be created taking into account the required validations.
-- Feature 4: Disciplines are listed alphabetically in ascending order.
-- Feature 5: Events are able to be created taking into account the required validations.
-- Feature 6: Scores are able to be assigned to athletes.
-- Feature 7: Given an athlete's ID, a list of all the events that athlete participated in will be shown.
-- Feature 8: Given a discipline's ID, a list of all the events of that discipline will be shown.
-- Feature 9: Given two dates, a list of all the events between those dates will be shown.
-- Feature 10: Given a name, a list of all the events containing that name will be shown.
-- Feature 11: Given a range of scores, a list of all the events whose athletes had a score between that range will be shown.
-- Feature 12: Given a name, a list of all the disciplines containing that name will be shown.
-- Feature 13: Given a disciplines ID, if a discipline with that ID exists, it will be shown.
-- Feature 14: Given a disicplines ID, a list of all the athletes who compete in that discipline will be shown.
+JWT Authorized Login – Different responsibilities assigned based on user’s role (admin/scorer).
+
+Athlete Discipline Assignment – The scorer can assign a sport discipline to an athlete.
+
+Discipline Creation – Disciplines can be created while considering required validations.
+
+Alphabetical Discipline Listing – Disciplines are listed in ascending order alphabetically.
+
+Event Creation – Events can be created while considering required validations.
+
+Score Assignment – Scores can be assigned to athletes.
+
+Athlete Event History – Given an athlete’s ID, a list of all the events they participated in will be shown.
+
+Discipline Event Listing – Given a discipline’s ID, a list of all events in that discipline will be shown.
+
+Events Between Dates – Given two dates, a list of all the events within that date range will be shown.
+
+Event Search by Name – Given a name, a list of all events containing that name will be shown.
+
+Score Range Filtering – Given a score range, a list of all events where athletes had scores within that range will be shown.
+
+Discipline Search by Name – Given a name, a list of all disciplines containing that name will be shown.
+
+Discipline Retrieval by ID – Given a discipline’s ID, if it exists, it will be shown.
+
+Athlete Discipline Listing – Given a discipline’s ID, a list of all athletes competing in that discipline will be shown.
 
 ## 🛠️ Technologies Used
 - **Frontend:** HTML, CSS, JavaScript
